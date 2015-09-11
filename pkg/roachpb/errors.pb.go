@@ -350,35 +350,716 @@ func (*StoreNotFoundError) Descriptor() ([]byte, []int) { return fileDescriptorE
 
 // ErrorDetail is a union type containing all available errors.
 type ErrorDetail struct {
-	NotLeaseHolder                *NotLeaseHolderError                `protobuf:"bytes,1,opt,name=not_lease_holder,json=notLeaseHolder" json:"not_lease_holder,omitempty"`
-	RangeNotFound                 *RangeNotFoundError                 `protobuf:"bytes,2,opt,name=range_not_found,json=rangeNotFound" json:"range_not_found,omitempty"`
-	RangeKeyMismatch              *RangeKeyMismatchError              `protobuf:"bytes,3,opt,name=range_key_mismatch,json=rangeKeyMismatch" json:"range_key_mismatch,omitempty"`
-	ReadWithinUncertaintyInterval *ReadWithinUncertaintyIntervalError `protobuf:"bytes,4,opt,name=read_within_uncertainty_interval,json=readWithinUncertaintyInterval" json:"read_within_uncertainty_interval,omitempty"`
-	TransactionAborted            *TransactionAbortedError            `protobuf:"bytes,5,opt,name=transaction_aborted,json=transactionAborted" json:"transaction_aborted,omitempty"`
-	TransactionPush               *TransactionPushError               `protobuf:"bytes,6,opt,name=transaction_push,json=transactionPush" json:"transaction_push,omitempty"`
-	TransactionRetry              *TransactionRetryError              `protobuf:"bytes,7,opt,name=transaction_retry,json=transactionRetry" json:"transaction_retry,omitempty"`
-	TransactionReplay             *TransactionReplayError             `protobuf:"bytes,22,opt,name=transaction_replay,json=transactionReplay" json:"transaction_replay,omitempty"`
-	TransactionStatus             *TransactionStatusError             `protobuf:"bytes,8,opt,name=transaction_status,json=transactionStatus" json:"transaction_status,omitempty"`
-	WriteIntent                   *WriteIntentError                   `protobuf:"bytes,9,opt,name=write_intent,json=writeIntent" json:"write_intent,omitempty"`
-	WriteTooOld                   *WriteTooOldError                   `protobuf:"bytes,10,opt,name=write_too_old,json=writeTooOld" json:"write_too_old,omitempty"`
-	OpRequiresTxn                 *OpRequiresTxnError                 `protobuf:"bytes,11,opt,name=op_requires_txn,json=opRequiresTxn" json:"op_requires_txn,omitempty"`
-	ConditionFailed               *ConditionFailedError               `protobuf:"bytes,12,opt,name=condition_failed,json=conditionFailed" json:"condition_failed,omitempty"`
-	LeaseRejected                 *LeaseRejectedError                 `protobuf:"bytes,13,opt,name=lease_rejected,json=leaseRejected" json:"lease_rejected,omitempty"`
-	NodeUnavailable               *NodeUnavailableError               `protobuf:"bytes,14,opt,name=node_unavailable,json=nodeUnavailable" json:"node_unavailable,omitempty"`
-	Send                          *SendError                          `protobuf:"bytes,15,opt,name=send" json:"send,omitempty"`
-	AmbiguousResult               *AmbiguousResultError               `protobuf:"bytes,26,opt,name=ambiguous_result,json=ambiguousResult" json:"ambiguous_result,omitempty"`
-	StoreNotFound                 *StoreNotFoundError                 `protobuf:"bytes,27,opt,name=store_not_found,json=storeNotFound" json:"store_not_found,omitempty"`
-	// TODO(kaneda): Following are added to preserve the type when
-	// converting Go errors from/to proto Errors. Revisit this design.
-	RaftGroupDeleted  *RaftGroupDeletedError  `protobuf:"bytes,16,opt,name=raft_group_deleted,json=raftGroupDeleted" json:"raft_group_deleted,omitempty"`
-	ReplicaCorruption *ReplicaCorruptionError `protobuf:"bytes,17,opt,name=replica_corruption,json=replicaCorruption" json:"replica_corruption,omitempty"`
-	ReplicaTooOld     *ReplicaTooOldError     `protobuf:"bytes,18,opt,name=replica_too_old,json=replicaTooOld" json:"replica_too_old,omitempty"`
+	// Types that are valid to be assigned to Value:
+	//	*ErrorDetail_NotLeaseHolder
+	//	*ErrorDetail_RangeNotFound
+	//	*ErrorDetail_RangeKeyMismatch
+	//	*ErrorDetail_ReadWithinUncertaintyInterval
+	//	*ErrorDetail_TransactionAborted
+	//	*ErrorDetail_TransactionPush
+	//	*ErrorDetail_TransactionRetry
+	//	*ErrorDetail_TransactionReplay
+	//	*ErrorDetail_TransactionStatus
+	//	*ErrorDetail_WriteIntent
+	//	*ErrorDetail_WriteTooOld
+	//	*ErrorDetail_OpRequiresTxn
+	//	*ErrorDetail_ConditionFailed
+	//	*ErrorDetail_LeaseRejected
+	//	*ErrorDetail_NodeUnavailable
+	//	*ErrorDetail_Send
+	//	*ErrorDetail_AmbiguousResult
+	//	*ErrorDetail_StoreNotFound
+	//	*ErrorDetail_RaftGroupDeleted
+	//	*ErrorDetail_ReplicaCorruption
+	//	*ErrorDetail_ReplicaTooOld
+	Value isErrorDetail_Value `protobuf_oneof:"value"`
 }
 
 func (m *ErrorDetail) Reset()                    { *m = ErrorDetail{} }
 func (m *ErrorDetail) String() string            { return proto.CompactTextString(m) }
 func (*ErrorDetail) ProtoMessage()               {}
 func (*ErrorDetail) Descriptor() ([]byte, []int) { return fileDescriptorErrors, []int{21} }
+
+type isErrorDetail_Value interface {
+	isErrorDetail_Value()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type ErrorDetail_NotLeaseHolder struct {
+	NotLeaseHolder *NotLeaseHolderError `protobuf:"bytes,1,opt,name=not_lease_holder,json=notLeaseHolder,oneof"`
+}
+type ErrorDetail_RangeNotFound struct {
+	RangeNotFound *RangeNotFoundError `protobuf:"bytes,2,opt,name=range_not_found,json=rangeNotFound,oneof"`
+}
+type ErrorDetail_RangeKeyMismatch struct {
+	RangeKeyMismatch *RangeKeyMismatchError `protobuf:"bytes,3,opt,name=range_key_mismatch,json=rangeKeyMismatch,oneof"`
+}
+type ErrorDetail_ReadWithinUncertaintyInterval struct {
+	ReadWithinUncertaintyInterval *ReadWithinUncertaintyIntervalError `protobuf:"bytes,4,opt,name=read_within_uncertainty_interval,json=readWithinUncertaintyInterval,oneof"`
+}
+type ErrorDetail_TransactionAborted struct {
+	TransactionAborted *TransactionAbortedError `protobuf:"bytes,5,opt,name=transaction_aborted,json=transactionAborted,oneof"`
+}
+type ErrorDetail_TransactionPush struct {
+	TransactionPush *TransactionPushError `protobuf:"bytes,6,opt,name=transaction_push,json=transactionPush,oneof"`
+}
+type ErrorDetail_TransactionRetry struct {
+	TransactionRetry *TransactionRetryError `protobuf:"bytes,7,opt,name=transaction_retry,json=transactionRetry,oneof"`
+}
+type ErrorDetail_TransactionReplay struct {
+	TransactionReplay *TransactionReplayError `protobuf:"bytes,22,opt,name=transaction_replay,json=transactionReplay,oneof"`
+}
+type ErrorDetail_TransactionStatus struct {
+	TransactionStatus *TransactionStatusError `protobuf:"bytes,8,opt,name=transaction_status,json=transactionStatus,oneof"`
+}
+type ErrorDetail_WriteIntent struct {
+	WriteIntent *WriteIntentError `protobuf:"bytes,9,opt,name=write_intent,json=writeIntent,oneof"`
+}
+type ErrorDetail_WriteTooOld struct {
+	WriteTooOld *WriteTooOldError `protobuf:"bytes,10,opt,name=write_too_old,json=writeTooOld,oneof"`
+}
+type ErrorDetail_OpRequiresTxn struct {
+	OpRequiresTxn *OpRequiresTxnError `protobuf:"bytes,11,opt,name=op_requires_txn,json=opRequiresTxn,oneof"`
+}
+type ErrorDetail_ConditionFailed struct {
+	ConditionFailed *ConditionFailedError `protobuf:"bytes,12,opt,name=condition_failed,json=conditionFailed,oneof"`
+}
+type ErrorDetail_LeaseRejected struct {
+	LeaseRejected *LeaseRejectedError `protobuf:"bytes,13,opt,name=lease_rejected,json=leaseRejected,oneof"`
+}
+type ErrorDetail_NodeUnavailable struct {
+	NodeUnavailable *NodeUnavailableError `protobuf:"bytes,14,opt,name=node_unavailable,json=nodeUnavailable,oneof"`
+}
+type ErrorDetail_Send struct {
+	Send *SendError `protobuf:"bytes,15,opt,name=send,oneof"`
+}
+type ErrorDetail_AmbiguousResult struct {
+	AmbiguousResult *AmbiguousResultError `protobuf:"bytes,26,opt,name=ambiguous_result,json=ambiguousResult,oneof"`
+}
+type ErrorDetail_StoreNotFound struct {
+	StoreNotFound *StoreNotFoundError `protobuf:"bytes,27,opt,name=store_not_found,json=storeNotFound,oneof"`
+}
+type ErrorDetail_RaftGroupDeleted struct {
+	RaftGroupDeleted *RaftGroupDeletedError `protobuf:"bytes,16,opt,name=raft_group_deleted,json=raftGroupDeleted,oneof"`
+}
+type ErrorDetail_ReplicaCorruption struct {
+	ReplicaCorruption *ReplicaCorruptionError `protobuf:"bytes,17,opt,name=replica_corruption,json=replicaCorruption,oneof"`
+}
+type ErrorDetail_ReplicaTooOld struct {
+	ReplicaTooOld *ReplicaTooOldError `protobuf:"bytes,18,opt,name=replica_too_old,json=replicaTooOld,oneof"`
+}
+
+func (*ErrorDetail_NotLeaseHolder) isErrorDetail_Value()                {}
+func (*ErrorDetail_RangeNotFound) isErrorDetail_Value()                 {}
+func (*ErrorDetail_RangeKeyMismatch) isErrorDetail_Value()              {}
+func (*ErrorDetail_ReadWithinUncertaintyInterval) isErrorDetail_Value() {}
+func (*ErrorDetail_TransactionAborted) isErrorDetail_Value()            {}
+func (*ErrorDetail_TransactionPush) isErrorDetail_Value()               {}
+func (*ErrorDetail_TransactionRetry) isErrorDetail_Value()              {}
+func (*ErrorDetail_TransactionReplay) isErrorDetail_Value()             {}
+func (*ErrorDetail_TransactionStatus) isErrorDetail_Value()             {}
+func (*ErrorDetail_WriteIntent) isErrorDetail_Value()                   {}
+func (*ErrorDetail_WriteTooOld) isErrorDetail_Value()                   {}
+func (*ErrorDetail_OpRequiresTxn) isErrorDetail_Value()                 {}
+func (*ErrorDetail_ConditionFailed) isErrorDetail_Value()               {}
+func (*ErrorDetail_LeaseRejected) isErrorDetail_Value()                 {}
+func (*ErrorDetail_NodeUnavailable) isErrorDetail_Value()               {}
+func (*ErrorDetail_Send) isErrorDetail_Value()                          {}
+func (*ErrorDetail_AmbiguousResult) isErrorDetail_Value()               {}
+func (*ErrorDetail_StoreNotFound) isErrorDetail_Value()                 {}
+func (*ErrorDetail_RaftGroupDeleted) isErrorDetail_Value()              {}
+func (*ErrorDetail_ReplicaCorruption) isErrorDetail_Value()             {}
+func (*ErrorDetail_ReplicaTooOld) isErrorDetail_Value()                 {}
+
+func (m *ErrorDetail) GetValue() isErrorDetail_Value {
+	if m != nil {
+		return m.Value
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetNotLeaseHolder() *NotLeaseHolderError {
+	if x, ok := m.GetValue().(*ErrorDetail_NotLeaseHolder); ok {
+		return x.NotLeaseHolder
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetRangeNotFound() *RangeNotFoundError {
+	if x, ok := m.GetValue().(*ErrorDetail_RangeNotFound); ok {
+		return x.RangeNotFound
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetRangeKeyMismatch() *RangeKeyMismatchError {
+	if x, ok := m.GetValue().(*ErrorDetail_RangeKeyMismatch); ok {
+		return x.RangeKeyMismatch
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetReadWithinUncertaintyInterval() *ReadWithinUncertaintyIntervalError {
+	if x, ok := m.GetValue().(*ErrorDetail_ReadWithinUncertaintyInterval); ok {
+		return x.ReadWithinUncertaintyInterval
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetTransactionAborted() *TransactionAbortedError {
+	if x, ok := m.GetValue().(*ErrorDetail_TransactionAborted); ok {
+		return x.TransactionAborted
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetTransactionPush() *TransactionPushError {
+	if x, ok := m.GetValue().(*ErrorDetail_TransactionPush); ok {
+		return x.TransactionPush
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetTransactionRetry() *TransactionRetryError {
+	if x, ok := m.GetValue().(*ErrorDetail_TransactionRetry); ok {
+		return x.TransactionRetry
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetTransactionReplay() *TransactionReplayError {
+	if x, ok := m.GetValue().(*ErrorDetail_TransactionReplay); ok {
+		return x.TransactionReplay
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetTransactionStatus() *TransactionStatusError {
+	if x, ok := m.GetValue().(*ErrorDetail_TransactionStatus); ok {
+		return x.TransactionStatus
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetWriteIntent() *WriteIntentError {
+	if x, ok := m.GetValue().(*ErrorDetail_WriteIntent); ok {
+		return x.WriteIntent
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetWriteTooOld() *WriteTooOldError {
+	if x, ok := m.GetValue().(*ErrorDetail_WriteTooOld); ok {
+		return x.WriteTooOld
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetOpRequiresTxn() *OpRequiresTxnError {
+	if x, ok := m.GetValue().(*ErrorDetail_OpRequiresTxn); ok {
+		return x.OpRequiresTxn
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetConditionFailed() *ConditionFailedError {
+	if x, ok := m.GetValue().(*ErrorDetail_ConditionFailed); ok {
+		return x.ConditionFailed
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetLeaseRejected() *LeaseRejectedError {
+	if x, ok := m.GetValue().(*ErrorDetail_LeaseRejected); ok {
+		return x.LeaseRejected
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetNodeUnavailable() *NodeUnavailableError {
+	if x, ok := m.GetValue().(*ErrorDetail_NodeUnavailable); ok {
+		return x.NodeUnavailable
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetSend() *SendError {
+	if x, ok := m.GetValue().(*ErrorDetail_Send); ok {
+		return x.Send
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetAmbiguousResult() *AmbiguousResultError {
+	if x, ok := m.GetValue().(*ErrorDetail_AmbiguousResult); ok {
+		return x.AmbiguousResult
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetStoreNotFound() *StoreNotFoundError {
+	if x, ok := m.GetValue().(*ErrorDetail_StoreNotFound); ok {
+		return x.StoreNotFound
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetRaftGroupDeleted() *RaftGroupDeletedError {
+	if x, ok := m.GetValue().(*ErrorDetail_RaftGroupDeleted); ok {
+		return x.RaftGroupDeleted
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetReplicaCorruption() *ReplicaCorruptionError {
+	if x, ok := m.GetValue().(*ErrorDetail_ReplicaCorruption); ok {
+		return x.ReplicaCorruption
+	}
+	return nil
+}
+
+func (m *ErrorDetail) GetReplicaTooOld() *ReplicaTooOldError {
+	if x, ok := m.GetValue().(*ErrorDetail_ReplicaTooOld); ok {
+		return x.ReplicaTooOld
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ErrorDetail) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ErrorDetail_OneofMarshaler, _ErrorDetail_OneofUnmarshaler, _ErrorDetail_OneofSizer, []interface{}{
+		(*ErrorDetail_NotLeaseHolder)(nil),
+		(*ErrorDetail_RangeNotFound)(nil),
+		(*ErrorDetail_RangeKeyMismatch)(nil),
+		(*ErrorDetail_ReadWithinUncertaintyInterval)(nil),
+		(*ErrorDetail_TransactionAborted)(nil),
+		(*ErrorDetail_TransactionPush)(nil),
+		(*ErrorDetail_TransactionRetry)(nil),
+		(*ErrorDetail_TransactionReplay)(nil),
+		(*ErrorDetail_TransactionStatus)(nil),
+		(*ErrorDetail_WriteIntent)(nil),
+		(*ErrorDetail_WriteTooOld)(nil),
+		(*ErrorDetail_OpRequiresTxn)(nil),
+		(*ErrorDetail_ConditionFailed)(nil),
+		(*ErrorDetail_LeaseRejected)(nil),
+		(*ErrorDetail_NodeUnavailable)(nil),
+		(*ErrorDetail_Send)(nil),
+		(*ErrorDetail_AmbiguousResult)(nil),
+		(*ErrorDetail_StoreNotFound)(nil),
+		(*ErrorDetail_RaftGroupDeleted)(nil),
+		(*ErrorDetail_ReplicaCorruption)(nil),
+		(*ErrorDetail_ReplicaTooOld)(nil),
+	}
+}
+
+func _ErrorDetail_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ErrorDetail)
+	// value
+	switch x := m.Value.(type) {
+	case *ErrorDetail_NotLeaseHolder:
+		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.NotLeaseHolder); err != nil {
+			return err
+		}
+	case *ErrorDetail_RangeNotFound:
+		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.RangeNotFound); err != nil {
+			return err
+		}
+	case *ErrorDetail_RangeKeyMismatch:
+		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.RangeKeyMismatch); err != nil {
+			return err
+		}
+	case *ErrorDetail_ReadWithinUncertaintyInterval:
+		_ = b.EncodeVarint(4<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ReadWithinUncertaintyInterval); err != nil {
+			return err
+		}
+	case *ErrorDetail_TransactionAborted:
+		_ = b.EncodeVarint(5<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.TransactionAborted); err != nil {
+			return err
+		}
+	case *ErrorDetail_TransactionPush:
+		_ = b.EncodeVarint(6<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.TransactionPush); err != nil {
+			return err
+		}
+	case *ErrorDetail_TransactionRetry:
+		_ = b.EncodeVarint(7<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.TransactionRetry); err != nil {
+			return err
+		}
+	case *ErrorDetail_TransactionReplay:
+		_ = b.EncodeVarint(22<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.TransactionReplay); err != nil {
+			return err
+		}
+	case *ErrorDetail_TransactionStatus:
+		_ = b.EncodeVarint(8<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.TransactionStatus); err != nil {
+			return err
+		}
+	case *ErrorDetail_WriteIntent:
+		_ = b.EncodeVarint(9<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.WriteIntent); err != nil {
+			return err
+		}
+	case *ErrorDetail_WriteTooOld:
+		_ = b.EncodeVarint(10<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.WriteTooOld); err != nil {
+			return err
+		}
+	case *ErrorDetail_OpRequiresTxn:
+		_ = b.EncodeVarint(11<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.OpRequiresTxn); err != nil {
+			return err
+		}
+	case *ErrorDetail_ConditionFailed:
+		_ = b.EncodeVarint(12<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ConditionFailed); err != nil {
+			return err
+		}
+	case *ErrorDetail_LeaseRejected:
+		_ = b.EncodeVarint(13<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.LeaseRejected); err != nil {
+			return err
+		}
+	case *ErrorDetail_NodeUnavailable:
+		_ = b.EncodeVarint(14<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.NodeUnavailable); err != nil {
+			return err
+		}
+	case *ErrorDetail_Send:
+		_ = b.EncodeVarint(15<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Send); err != nil {
+			return err
+		}
+	case *ErrorDetail_AmbiguousResult:
+		_ = b.EncodeVarint(26<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.AmbiguousResult); err != nil {
+			return err
+		}
+	case *ErrorDetail_StoreNotFound:
+		_ = b.EncodeVarint(27<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.StoreNotFound); err != nil {
+			return err
+		}
+	case *ErrorDetail_RaftGroupDeleted:
+		_ = b.EncodeVarint(16<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.RaftGroupDeleted); err != nil {
+			return err
+		}
+	case *ErrorDetail_ReplicaCorruption:
+		_ = b.EncodeVarint(17<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ReplicaCorruption); err != nil {
+			return err
+		}
+	case *ErrorDetail_ReplicaTooOld:
+		_ = b.EncodeVarint(18<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ReplicaTooOld); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("ErrorDetail.Value has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ErrorDetail_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ErrorDetail)
+	switch tag {
+	case 1: // value.not_lease_holder
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(NotLeaseHolderError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_NotLeaseHolder{msg}
+		return true, err
+	case 2: // value.range_not_found
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(RangeNotFoundError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_RangeNotFound{msg}
+		return true, err
+	case 3: // value.range_key_mismatch
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(RangeKeyMismatchError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_RangeKeyMismatch{msg}
+		return true, err
+	case 4: // value.read_within_uncertainty_interval
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ReadWithinUncertaintyIntervalError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_ReadWithinUncertaintyInterval{msg}
+		return true, err
+	case 5: // value.transaction_aborted
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransactionAbortedError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_TransactionAborted{msg}
+		return true, err
+	case 6: // value.transaction_push
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransactionPushError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_TransactionPush{msg}
+		return true, err
+	case 7: // value.transaction_retry
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransactionRetryError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_TransactionRetry{msg}
+		return true, err
+	case 22: // value.transaction_replay
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransactionReplayError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_TransactionReplay{msg}
+		return true, err
+	case 8: // value.transaction_status
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(TransactionStatusError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_TransactionStatus{msg}
+		return true, err
+	case 9: // value.write_intent
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(WriteIntentError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_WriteIntent{msg}
+		return true, err
+	case 10: // value.write_too_old
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(WriteTooOldError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_WriteTooOld{msg}
+		return true, err
+	case 11: // value.op_requires_txn
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(OpRequiresTxnError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_OpRequiresTxn{msg}
+		return true, err
+	case 12: // value.condition_failed
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ConditionFailedError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_ConditionFailed{msg}
+		return true, err
+	case 13: // value.lease_rejected
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(LeaseRejectedError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_LeaseRejected{msg}
+		return true, err
+	case 14: // value.node_unavailable
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(NodeUnavailableError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_NodeUnavailable{msg}
+		return true, err
+	case 15: // value.send
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(SendError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_Send{msg}
+		return true, err
+	case 26: // value.ambiguous_result
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(AmbiguousResultError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_AmbiguousResult{msg}
+		return true, err
+	case 27: // value.store_not_found
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(StoreNotFoundError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_StoreNotFound{msg}
+		return true, err
+	case 16: // value.raft_group_deleted
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(RaftGroupDeletedError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_RaftGroupDeleted{msg}
+		return true, err
+	case 17: // value.replica_corruption
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ReplicaCorruptionError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_ReplicaCorruption{msg}
+		return true, err
+	case 18: // value.replica_too_old
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ReplicaTooOldError)
+		err := b.DecodeMessage(msg)
+		m.Value = &ErrorDetail_ReplicaTooOld{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ErrorDetail_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ErrorDetail)
+	// value
+	switch x := m.Value.(type) {
+	case *ErrorDetail_NotLeaseHolder:
+		s := proto.Size(x.NotLeaseHolder)
+		n += proto.SizeVarint(1<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_RangeNotFound:
+		s := proto.Size(x.RangeNotFound)
+		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_RangeKeyMismatch:
+		s := proto.Size(x.RangeKeyMismatch)
+		n += proto.SizeVarint(3<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_ReadWithinUncertaintyInterval:
+		s := proto.Size(x.ReadWithinUncertaintyInterval)
+		n += proto.SizeVarint(4<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_TransactionAborted:
+		s := proto.Size(x.TransactionAborted)
+		n += proto.SizeVarint(5<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_TransactionPush:
+		s := proto.Size(x.TransactionPush)
+		n += proto.SizeVarint(6<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_TransactionRetry:
+		s := proto.Size(x.TransactionRetry)
+		n += proto.SizeVarint(7<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_TransactionReplay:
+		s := proto.Size(x.TransactionReplay)
+		n += proto.SizeVarint(22<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_TransactionStatus:
+		s := proto.Size(x.TransactionStatus)
+		n += proto.SizeVarint(8<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_WriteIntent:
+		s := proto.Size(x.WriteIntent)
+		n += proto.SizeVarint(9<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_WriteTooOld:
+		s := proto.Size(x.WriteTooOld)
+		n += proto.SizeVarint(10<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_OpRequiresTxn:
+		s := proto.Size(x.OpRequiresTxn)
+		n += proto.SizeVarint(11<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_ConditionFailed:
+		s := proto.Size(x.ConditionFailed)
+		n += proto.SizeVarint(12<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_LeaseRejected:
+		s := proto.Size(x.LeaseRejected)
+		n += proto.SizeVarint(13<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_NodeUnavailable:
+		s := proto.Size(x.NodeUnavailable)
+		n += proto.SizeVarint(14<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_Send:
+		s := proto.Size(x.Send)
+		n += proto.SizeVarint(15<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_AmbiguousResult:
+		s := proto.Size(x.AmbiguousResult)
+		n += proto.SizeVarint(26<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_StoreNotFound:
+		s := proto.Size(x.StoreNotFound)
+		n += proto.SizeVarint(27<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_RaftGroupDeleted:
+		s := proto.Size(x.RaftGroupDeleted)
+		n += proto.SizeVarint(16<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_ReplicaCorruption:
+		s := proto.Size(x.ReplicaCorruption)
+		n += proto.SizeVarint(17<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ErrorDetail_ReplicaTooOld:
+		s := proto.Size(x.ReplicaTooOld)
+		n += proto.SizeVarint(18<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
 
 // ErrPosition describes the position of an error in a Batch. A simple nullable
 // primitive field would break compatibility with proto3, where primitive fields
@@ -1031,223 +1712,299 @@ func (m *ErrorDetail) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Value != nil {
+		nn15, err := m.Value.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += nn15
+	}
+	return i, nil
+}
+
+func (m *ErrorDetail_NotLeaseHolder) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
 	if m.NotLeaseHolder != nil {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.NotLeaseHolder.Size()))
-		n15, err := m.NotLeaseHolder.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n15
-	}
-	if m.RangeNotFound != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.RangeNotFound.Size()))
-		n16, err := m.RangeNotFound.MarshalTo(dAtA[i:])
+		n16, err := m.NotLeaseHolder.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n16
 	}
-	if m.RangeKeyMismatch != nil {
-		dAtA[i] = 0x1a
+	return i, nil
+}
+func (m *ErrorDetail_RangeNotFound) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.RangeNotFound != nil {
+		dAtA[i] = 0x12
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.RangeKeyMismatch.Size()))
-		n17, err := m.RangeKeyMismatch.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.RangeNotFound.Size()))
+		n17, err := m.RangeNotFound.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n17
 	}
-	if m.ReadWithinUncertaintyInterval != nil {
-		dAtA[i] = 0x22
+	return i, nil
+}
+func (m *ErrorDetail_RangeKeyMismatch) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.RangeKeyMismatch != nil {
+		dAtA[i] = 0x1a
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.ReadWithinUncertaintyInterval.Size()))
-		n18, err := m.ReadWithinUncertaintyInterval.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.RangeKeyMismatch.Size()))
+		n18, err := m.RangeKeyMismatch.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n18
 	}
-	if m.TransactionAborted != nil {
-		dAtA[i] = 0x2a
+	return i, nil
+}
+func (m *ErrorDetail_ReadWithinUncertaintyInterval) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.ReadWithinUncertaintyInterval != nil {
+		dAtA[i] = 0x22
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionAborted.Size()))
-		n19, err := m.TransactionAborted.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.ReadWithinUncertaintyInterval.Size()))
+		n19, err := m.ReadWithinUncertaintyInterval.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n19
 	}
-	if m.TransactionPush != nil {
-		dAtA[i] = 0x32
+	return i, nil
+}
+func (m *ErrorDetail_TransactionAborted) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.TransactionAborted != nil {
+		dAtA[i] = 0x2a
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionPush.Size()))
-		n20, err := m.TransactionPush.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionAborted.Size()))
+		n20, err := m.TransactionAborted.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n20
 	}
-	if m.TransactionRetry != nil {
-		dAtA[i] = 0x3a
+	return i, nil
+}
+func (m *ErrorDetail_TransactionPush) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.TransactionPush != nil {
+		dAtA[i] = 0x32
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionRetry.Size()))
-		n21, err := m.TransactionRetry.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionPush.Size()))
+		n21, err := m.TransactionPush.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n21
 	}
-	if m.TransactionStatus != nil {
-		dAtA[i] = 0x42
+	return i, nil
+}
+func (m *ErrorDetail_TransactionRetry) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.TransactionRetry != nil {
+		dAtA[i] = 0x3a
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionStatus.Size()))
-		n22, err := m.TransactionStatus.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionRetry.Size()))
+		n22, err := m.TransactionRetry.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n22
 	}
-	if m.WriteIntent != nil {
-		dAtA[i] = 0x4a
+	return i, nil
+}
+func (m *ErrorDetail_TransactionStatus) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.TransactionStatus != nil {
+		dAtA[i] = 0x42
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.WriteIntent.Size()))
-		n23, err := m.WriteIntent.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionStatus.Size()))
+		n23, err := m.TransactionStatus.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n23
 	}
-	if m.WriteTooOld != nil {
-		dAtA[i] = 0x52
+	return i, nil
+}
+func (m *ErrorDetail_WriteIntent) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.WriteIntent != nil {
+		dAtA[i] = 0x4a
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.WriteTooOld.Size()))
-		n24, err := m.WriteTooOld.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.WriteIntent.Size()))
+		n24, err := m.WriteIntent.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n24
 	}
-	if m.OpRequiresTxn != nil {
-		dAtA[i] = 0x5a
+	return i, nil
+}
+func (m *ErrorDetail_WriteTooOld) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.WriteTooOld != nil {
+		dAtA[i] = 0x52
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.OpRequiresTxn.Size()))
-		n25, err := m.OpRequiresTxn.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.WriteTooOld.Size()))
+		n25, err := m.WriteTooOld.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n25
 	}
-	if m.ConditionFailed != nil {
-		dAtA[i] = 0x62
+	return i, nil
+}
+func (m *ErrorDetail_OpRequiresTxn) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.OpRequiresTxn != nil {
+		dAtA[i] = 0x5a
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.ConditionFailed.Size()))
-		n26, err := m.ConditionFailed.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.OpRequiresTxn.Size()))
+		n26, err := m.OpRequiresTxn.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n26
 	}
-	if m.LeaseRejected != nil {
-		dAtA[i] = 0x6a
+	return i, nil
+}
+func (m *ErrorDetail_ConditionFailed) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.ConditionFailed != nil {
+		dAtA[i] = 0x62
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.LeaseRejected.Size()))
-		n27, err := m.LeaseRejected.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.ConditionFailed.Size()))
+		n27, err := m.ConditionFailed.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n27
 	}
-	if m.NodeUnavailable != nil {
-		dAtA[i] = 0x72
+	return i, nil
+}
+func (m *ErrorDetail_LeaseRejected) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.LeaseRejected != nil {
+		dAtA[i] = 0x6a
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.NodeUnavailable.Size()))
-		n28, err := m.NodeUnavailable.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.LeaseRejected.Size()))
+		n28, err := m.LeaseRejected.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n28
 	}
-	if m.Send != nil {
-		dAtA[i] = 0x7a
+	return i, nil
+}
+func (m *ErrorDetail_NodeUnavailable) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.NodeUnavailable != nil {
+		dAtA[i] = 0x72
 		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.Send.Size()))
-		n29, err := m.Send.MarshalTo(dAtA[i:])
+		i = encodeVarintErrors(dAtA, i, uint64(m.NodeUnavailable.Size()))
+		n29, err := m.NodeUnavailable.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n29
 	}
+	return i, nil
+}
+func (m *ErrorDetail_Send) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.Send != nil {
+		dAtA[i] = 0x7a
+		i++
+		i = encodeVarintErrors(dAtA, i, uint64(m.Send.Size()))
+		n30, err := m.Send.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n30
+	}
+	return i, nil
+}
+func (m *ErrorDetail_RaftGroupDeleted) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
 	if m.RaftGroupDeleted != nil {
 		dAtA[i] = 0x82
 		i++
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.RaftGroupDeleted.Size()))
-		n30, err := m.RaftGroupDeleted.MarshalTo(dAtA[i:])
+		n31, err := m.RaftGroupDeleted.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n30
+		i += n31
 	}
+	return i, nil
+}
+func (m *ErrorDetail_ReplicaCorruption) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
 	if m.ReplicaCorruption != nil {
 		dAtA[i] = 0x8a
 		i++
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.ReplicaCorruption.Size()))
-		n31, err := m.ReplicaCorruption.MarshalTo(dAtA[i:])
+		n32, err := m.ReplicaCorruption.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n31
+		i += n32
 	}
+	return i, nil
+}
+func (m *ErrorDetail_ReplicaTooOld) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
 	if m.ReplicaTooOld != nil {
 		dAtA[i] = 0x92
 		i++
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.ReplicaTooOld.Size()))
-		n32, err := m.ReplicaTooOld.MarshalTo(dAtA[i:])
+		n33, err := m.ReplicaTooOld.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n32
+		i += n33
 	}
+	return i, nil
+}
+func (m *ErrorDetail_TransactionReplay) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
 	if m.TransactionReplay != nil {
 		dAtA[i] = 0xb2
 		i++
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.TransactionReplay.Size()))
-		n33, err := m.TransactionReplay.MarshalTo(dAtA[i:])
+		n34, err := m.TransactionReplay.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n33
+		i += n34
 	}
+	return i, nil
+}
+func (m *ErrorDetail_AmbiguousResult) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
 	if m.AmbiguousResult != nil {
 		dAtA[i] = 0xd2
 		i++
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.AmbiguousResult.Size()))
-		n34, err := m.AmbiguousResult.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n34
-	}
-	if m.StoreNotFound != nil {
-		dAtA[i] = 0xda
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.StoreNotFound.Size()))
-		n35, err := m.StoreNotFound.MarshalTo(dAtA[i:])
+		n35, err := m.AmbiguousResult.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
@@ -1255,7 +2012,22 @@ func (m *ErrorDetail) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-
+func (m *ErrorDetail_StoreNotFound) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.StoreNotFound != nil {
+		dAtA[i] = 0xda
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintErrors(dAtA, i, uint64(m.StoreNotFound.Size()))
+		n36, err := m.StoreNotFound.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n36
+	}
+	return i, nil
+}
 func (m *ErrPosition) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1303,11 +2075,11 @@ func (m *Error) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x22
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.UnexposedTxn.Size()))
-		n36, err := m.UnexposedTxn.MarshalTo(dAtA[i:])
+		n37, err := m.UnexposedTxn.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n36
+		i += n37
 	}
 	dAtA[i] = 0x28
 	i++
@@ -1316,30 +2088,30 @@ func (m *Error) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x32
 		i++
 		i = encodeVarintErrors(dAtA, i, uint64(m.Detail.Size()))
-		n37, err := m.Detail.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n37
-	}
-	if m.Index != nil {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintErrors(dAtA, i, uint64(m.Index.Size()))
-		n38, err := m.Index.MarshalTo(dAtA[i:])
+		n38, err := m.Detail.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n38
 	}
+	if m.Index != nil {
+		dAtA[i] = 0x3a
+		i++
+		i = encodeVarintErrors(dAtA, i, uint64(m.Index.Size()))
+		n39, err := m.Index.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n39
+	}
 	dAtA[i] = 0x42
 	i++
 	i = encodeVarintErrors(dAtA, i, uint64(m.Now.Size()))
-	n39, err := m.Now.MarshalTo(dAtA[i:])
+	n40, err := m.Now.MarshalTo(dAtA[i:])
 	if err != nil {
 		return 0, err
 	}
-	i += n39
+	i += n40
 	return i, nil
 }
 
@@ -1570,93 +2342,201 @@ func (m *StoreNotFoundError) Size() (n int) {
 func (m *ErrorDetail) Size() (n int) {
 	var l int
 	_ = l
+	if m.Value != nil {
+		n += m.Value.Size()
+	}
+	return n
+}
+
+func (m *ErrorDetail_NotLeaseHolder) Size() (n int) {
+	var l int
+	_ = l
 	if m.NotLeaseHolder != nil {
 		l = m.NotLeaseHolder.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_RangeNotFound) Size() (n int) {
+	var l int
+	_ = l
 	if m.RangeNotFound != nil {
 		l = m.RangeNotFound.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_RangeKeyMismatch) Size() (n int) {
+	var l int
+	_ = l
 	if m.RangeKeyMismatch != nil {
 		l = m.RangeKeyMismatch.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_ReadWithinUncertaintyInterval) Size() (n int) {
+	var l int
+	_ = l
 	if m.ReadWithinUncertaintyInterval != nil {
 		l = m.ReadWithinUncertaintyInterval.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_TransactionAborted) Size() (n int) {
+	var l int
+	_ = l
 	if m.TransactionAborted != nil {
 		l = m.TransactionAborted.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_TransactionPush) Size() (n int) {
+	var l int
+	_ = l
 	if m.TransactionPush != nil {
 		l = m.TransactionPush.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_TransactionRetry) Size() (n int) {
+	var l int
+	_ = l
 	if m.TransactionRetry != nil {
 		l = m.TransactionRetry.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_TransactionStatus) Size() (n int) {
+	var l int
+	_ = l
 	if m.TransactionStatus != nil {
 		l = m.TransactionStatus.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_WriteIntent) Size() (n int) {
+	var l int
+	_ = l
 	if m.WriteIntent != nil {
 		l = m.WriteIntent.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_WriteTooOld) Size() (n int) {
+	var l int
+	_ = l
 	if m.WriteTooOld != nil {
 		l = m.WriteTooOld.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_OpRequiresTxn) Size() (n int) {
+	var l int
+	_ = l
 	if m.OpRequiresTxn != nil {
 		l = m.OpRequiresTxn.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_ConditionFailed) Size() (n int) {
+	var l int
+	_ = l
 	if m.ConditionFailed != nil {
 		l = m.ConditionFailed.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_LeaseRejected) Size() (n int) {
+	var l int
+	_ = l
 	if m.LeaseRejected != nil {
 		l = m.LeaseRejected.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_NodeUnavailable) Size() (n int) {
+	var l int
+	_ = l
 	if m.NodeUnavailable != nil {
 		l = m.NodeUnavailable.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_Send) Size() (n int) {
+	var l int
+	_ = l
 	if m.Send != nil {
 		l = m.Send.Size()
 		n += 1 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_RaftGroupDeleted) Size() (n int) {
+	var l int
+	_ = l
 	if m.RaftGroupDeleted != nil {
 		l = m.RaftGroupDeleted.Size()
 		n += 2 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_ReplicaCorruption) Size() (n int) {
+	var l int
+	_ = l
 	if m.ReplicaCorruption != nil {
 		l = m.ReplicaCorruption.Size()
 		n += 2 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_ReplicaTooOld) Size() (n int) {
+	var l int
+	_ = l
 	if m.ReplicaTooOld != nil {
 		l = m.ReplicaTooOld.Size()
 		n += 2 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_TransactionReplay) Size() (n int) {
+	var l int
+	_ = l
 	if m.TransactionReplay != nil {
 		l = m.TransactionReplay.Size()
 		n += 2 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_AmbiguousResult) Size() (n int) {
+	var l int
+	_ = l
 	if m.AmbiguousResult != nil {
 		l = m.AmbiguousResult.Size()
 		n += 2 + l + sovErrors(uint64(l))
 	}
+	return n
+}
+func (m *ErrorDetail_StoreNotFound) Size() (n int) {
+	var l int
+	_ = l
 	if m.StoreNotFound != nil {
 		l = m.StoreNotFound.Size()
 		n += 2 + l + sovErrors(uint64(l))
 	}
 	return n
 }
-
 func (m *ErrPosition) Size() (n int) {
 	var l int
 	_ = l
@@ -1700,122 +2580,6 @@ func sovErrors(x uint64) (n int) {
 }
 func sozErrors(x uint64) (n int) {
 	return sovErrors(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *ErrorDetail) GetValue() interface{} {
-	if this.NotLeaseHolder != nil {
-		return this.NotLeaseHolder
-	}
-	if this.RangeNotFound != nil {
-		return this.RangeNotFound
-	}
-	if this.RangeKeyMismatch != nil {
-		return this.RangeKeyMismatch
-	}
-	if this.ReadWithinUncertaintyInterval != nil {
-		return this.ReadWithinUncertaintyInterval
-	}
-	if this.TransactionAborted != nil {
-		return this.TransactionAborted
-	}
-	if this.TransactionPush != nil {
-		return this.TransactionPush
-	}
-	if this.TransactionRetry != nil {
-		return this.TransactionRetry
-	}
-	if this.TransactionStatus != nil {
-		return this.TransactionStatus
-	}
-	if this.WriteIntent != nil {
-		return this.WriteIntent
-	}
-	if this.WriteTooOld != nil {
-		return this.WriteTooOld
-	}
-	if this.OpRequiresTxn != nil {
-		return this.OpRequiresTxn
-	}
-	if this.ConditionFailed != nil {
-		return this.ConditionFailed
-	}
-	if this.LeaseRejected != nil {
-		return this.LeaseRejected
-	}
-	if this.NodeUnavailable != nil {
-		return this.NodeUnavailable
-	}
-	if this.Send != nil {
-		return this.Send
-	}
-	if this.RaftGroupDeleted != nil {
-		return this.RaftGroupDeleted
-	}
-	if this.ReplicaCorruption != nil {
-		return this.ReplicaCorruption
-	}
-	if this.ReplicaTooOld != nil {
-		return this.ReplicaTooOld
-	}
-	if this.TransactionReplay != nil {
-		return this.TransactionReplay
-	}
-	if this.AmbiguousResult != nil {
-		return this.AmbiguousResult
-	}
-	if this.StoreNotFound != nil {
-		return this.StoreNotFound
-	}
-	return nil
-}
-
-func (this *ErrorDetail) SetValue(value interface{}) bool {
-	switch vt := value.(type) {
-	case *NotLeaseHolderError:
-		this.NotLeaseHolder = vt
-	case *RangeNotFoundError:
-		this.RangeNotFound = vt
-	case *RangeKeyMismatchError:
-		this.RangeKeyMismatch = vt
-	case *ReadWithinUncertaintyIntervalError:
-		this.ReadWithinUncertaintyInterval = vt
-	case *TransactionAbortedError:
-		this.TransactionAborted = vt
-	case *TransactionPushError:
-		this.TransactionPush = vt
-	case *TransactionRetryError:
-		this.TransactionRetry = vt
-	case *TransactionStatusError:
-		this.TransactionStatus = vt
-	case *WriteIntentError:
-		this.WriteIntent = vt
-	case *WriteTooOldError:
-		this.WriteTooOld = vt
-	case *OpRequiresTxnError:
-		this.OpRequiresTxn = vt
-	case *ConditionFailedError:
-		this.ConditionFailed = vt
-	case *LeaseRejectedError:
-		this.LeaseRejected = vt
-	case *NodeUnavailableError:
-		this.NodeUnavailable = vt
-	case *SendError:
-		this.Send = vt
-	case *RaftGroupDeletedError:
-		this.RaftGroupDeleted = vt
-	case *ReplicaCorruptionError:
-		this.ReplicaCorruption = vt
-	case *ReplicaTooOldError:
-		this.ReplicaTooOld = vt
-	case *TransactionReplayError:
-		this.TransactionReplay = vt
-	case *AmbiguousResultError:
-		this.AmbiguousResult = vt
-	case *StoreNotFoundError:
-		this.StoreNotFound = vt
-	default:
-		return false
-	}
-	return true
 }
 func (m *NotLeaseHolderError) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -3723,12 +4487,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.NotLeaseHolder == nil {
-				m.NotLeaseHolder = &NotLeaseHolderError{}
-			}
-			if err := m.NotLeaseHolder.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &NotLeaseHolderError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_NotLeaseHolder{v}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3756,12 +4519,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.RangeNotFound == nil {
-				m.RangeNotFound = &RangeNotFoundError{}
-			}
-			if err := m.RangeNotFound.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &RangeNotFoundError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_RangeNotFound{v}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -3789,12 +4551,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.RangeKeyMismatch == nil {
-				m.RangeKeyMismatch = &RangeKeyMismatchError{}
-			}
-			if err := m.RangeKeyMismatch.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &RangeKeyMismatchError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_RangeKeyMismatch{v}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -3822,12 +4583,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.ReadWithinUncertaintyInterval == nil {
-				m.ReadWithinUncertaintyInterval = &ReadWithinUncertaintyIntervalError{}
-			}
-			if err := m.ReadWithinUncertaintyInterval.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &ReadWithinUncertaintyIntervalError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_ReadWithinUncertaintyInterval{v}
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -3855,12 +4615,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.TransactionAborted == nil {
-				m.TransactionAborted = &TransactionAbortedError{}
-			}
-			if err := m.TransactionAborted.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &TransactionAbortedError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_TransactionAborted{v}
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -3888,12 +4647,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.TransactionPush == nil {
-				m.TransactionPush = &TransactionPushError{}
-			}
-			if err := m.TransactionPush.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &TransactionPushError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_TransactionPush{v}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -3921,12 +4679,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.TransactionRetry == nil {
-				m.TransactionRetry = &TransactionRetryError{}
-			}
-			if err := m.TransactionRetry.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &TransactionRetryError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_TransactionRetry{v}
 			iNdEx = postIndex
 		case 8:
 			if wireType != 2 {
@@ -3954,12 +4711,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.TransactionStatus == nil {
-				m.TransactionStatus = &TransactionStatusError{}
-			}
-			if err := m.TransactionStatus.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &TransactionStatusError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_TransactionStatus{v}
 			iNdEx = postIndex
 		case 9:
 			if wireType != 2 {
@@ -3987,12 +4743,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.WriteIntent == nil {
-				m.WriteIntent = &WriteIntentError{}
-			}
-			if err := m.WriteIntent.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &WriteIntentError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_WriteIntent{v}
 			iNdEx = postIndex
 		case 10:
 			if wireType != 2 {
@@ -4020,12 +4775,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.WriteTooOld == nil {
-				m.WriteTooOld = &WriteTooOldError{}
-			}
-			if err := m.WriteTooOld.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &WriteTooOldError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_WriteTooOld{v}
 			iNdEx = postIndex
 		case 11:
 			if wireType != 2 {
@@ -4053,12 +4807,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.OpRequiresTxn == nil {
-				m.OpRequiresTxn = &OpRequiresTxnError{}
-			}
-			if err := m.OpRequiresTxn.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &OpRequiresTxnError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_OpRequiresTxn{v}
 			iNdEx = postIndex
 		case 12:
 			if wireType != 2 {
@@ -4086,12 +4839,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.ConditionFailed == nil {
-				m.ConditionFailed = &ConditionFailedError{}
-			}
-			if err := m.ConditionFailed.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &ConditionFailedError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_ConditionFailed{v}
 			iNdEx = postIndex
 		case 13:
 			if wireType != 2 {
@@ -4119,12 +4871,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.LeaseRejected == nil {
-				m.LeaseRejected = &LeaseRejectedError{}
-			}
-			if err := m.LeaseRejected.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &LeaseRejectedError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_LeaseRejected{v}
 			iNdEx = postIndex
 		case 14:
 			if wireType != 2 {
@@ -4152,12 +4903,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.NodeUnavailable == nil {
-				m.NodeUnavailable = &NodeUnavailableError{}
-			}
-			if err := m.NodeUnavailable.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &NodeUnavailableError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_NodeUnavailable{v}
 			iNdEx = postIndex
 		case 15:
 			if wireType != 2 {
@@ -4185,12 +4935,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Send == nil {
-				m.Send = &SendError{}
-			}
-			if err := m.Send.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &SendError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_Send{v}
 			iNdEx = postIndex
 		case 16:
 			if wireType != 2 {
@@ -4218,12 +4967,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.RaftGroupDeleted == nil {
-				m.RaftGroupDeleted = &RaftGroupDeletedError{}
-			}
-			if err := m.RaftGroupDeleted.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &RaftGroupDeletedError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_RaftGroupDeleted{v}
 			iNdEx = postIndex
 		case 17:
 			if wireType != 2 {
@@ -4251,12 +4999,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.ReplicaCorruption == nil {
-				m.ReplicaCorruption = &ReplicaCorruptionError{}
-			}
-			if err := m.ReplicaCorruption.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &ReplicaCorruptionError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_ReplicaCorruption{v}
 			iNdEx = postIndex
 		case 18:
 			if wireType != 2 {
@@ -4284,12 +5031,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.ReplicaTooOld == nil {
-				m.ReplicaTooOld = &ReplicaTooOldError{}
-			}
-			if err := m.ReplicaTooOld.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &ReplicaTooOldError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_ReplicaTooOld{v}
 			iNdEx = postIndex
 		case 22:
 			if wireType != 2 {
@@ -4317,12 +5063,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.TransactionReplay == nil {
-				m.TransactionReplay = &TransactionReplayError{}
-			}
-			if err := m.TransactionReplay.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &TransactionReplayError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_TransactionReplay{v}
 			iNdEx = postIndex
 		case 26:
 			if wireType != 2 {
@@ -4350,12 +5095,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.AmbiguousResult == nil {
-				m.AmbiguousResult = &AmbiguousResultError{}
-			}
-			if err := m.AmbiguousResult.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &AmbiguousResultError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_AmbiguousResult{v}
 			iNdEx = postIndex
 		case 27:
 			if wireType != 2 {
@@ -4383,12 +5127,11 @@ func (m *ErrorDetail) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.StoreNotFound == nil {
-				m.StoreNotFound = &StoreNotFoundError{}
-			}
-			if err := m.StoreNotFound.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			v := &StoreNotFoundError{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			m.Value = &ErrorDetail_StoreNotFound{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4834,109 +5577,110 @@ var (
 func init() { proto.RegisterFile("cockroach/pkg/roachpb/errors.proto", fileDescriptorErrors) }
 
 var fileDescriptorErrors = []byte{
-	// 1651 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x57, 0x4f, 0x73, 0xdb, 0xc6,
-	0x15, 0x17, 0x24, 0xca, 0x14, 0x1f, 0x45, 0x91, 0xda, 0x28, 0x0a, 0xac, 0x36, 0x94, 0x82, 0xa4,
-	0xa9, 0x92, 0x83, 0x94, 0xba, 0x75, 0x67, 0xe2, 0xb6, 0x07, 0xfd, 0x75, 0x65, 0x45, 0xb2, 0x67,
-	0x25, 0x27, 0x9d, 0xa6, 0x33, 0x98, 0x35, 0xb0, 0xa6, 0x50, 0x83, 0x58, 0x78, 0x77, 0x61, 0x49,
-	0x97, 0x7e, 0x86, 0x1e, 0xdb, 0x5b, 0x2e, 0xbd, 0x75, 0x3a, 0xfd, 0x10, 0x3d, 0xf8, 0xd8, 0x63,
-	0x4f, 0x9e, 0x56, 0xfd, 0x16, 0x3e, 0x65, 0xf6, 0x0f, 0x48, 0x40, 0x04, 0x19, 0x8e, 0x6f, 0xe0,
-	0x6f, 0xdf, 0xfb, 0xed, 0xdb, 0x7d, 0xfb, 0xde, 0xef, 0x11, 0xbc, 0x80, 0x05, 0x2f, 0x38, 0x23,
-	0xc1, 0xc5, 0x76, 0xfa, 0xa2, 0xb7, 0xad, 0xbf, 0xd2, 0x67, 0xdb, 0x94, 0x73, 0xc6, 0xc5, 0x56,
-	0xca, 0x99, 0x64, 0x68, 0x79, 0x60, 0xb3, 0x65, 0xd7, 0xd7, 0x3e, 0xa9, 0x76, 0xeb, 0x53, 0x49,
-	0x42, 0x22, 0x89, 0x71, 0x5c, 0xdb, 0xa8, 0xb6, 0x2a, 0x58, 0x7c, 0x5a, 0xb6, 0xc8, 0x64, 0x14,
-	0x6f, 0x5f, 0xc4, 0xc1, 0xb6, 0x8c, 0xfa, 0x54, 0x48, 0xd2, 0x4f, 0xad, 0xdd, 0x4a, 0x8f, 0xf5,
-	0x98, 0xfe, 0xdc, 0x56, 0x5f, 0x06, 0xf5, 0xfe, 0x39, 0x0b, 0xef, 0x9d, 0x32, 0xf9, 0x15, 0x25,
-	0x82, 0xfe, 0x96, 0xc5, 0x21, 0xe5, 0x07, 0x2a, 0x6e, 0xb4, 0x0f, 0x75, 0x4e, 0xd3, 0x38, 0x0a,
-	0x88, 0xeb, 0x6c, 0x38, 0x9b, 0xcd, 0x7b, 0x9f, 0x6c, 0x8d, 0x1c, 0x61, 0x0b, 0x1b, 0x8b, 0x7d,
-	0x2a, 0x02, 0x1e, 0xa5, 0x92, 0xf1, 0xdd, 0xda, 0xeb, 0x37, 0xeb, 0x33, 0x38, 0x77, 0x45, 0x0f,
-	0x61, 0x31, 0x56, 0xcc, 0xfe, 0x85, 0xa6, 0x76, 0x67, 0xa7, 0xa7, 0xc2, 0xcd, 0x78, 0x18, 0x13,
-	0xba, 0x0f, 0x0b, 0x9c, 0x24, 0x3d, 0xea, 0x47, 0xa1, 0x3b, 0xb7, 0xe1, 0x6c, 0xce, 0xed, 0xae,
-	0xa9, 0x9d, 0x6e, 0xde, 0xac, 0xd7, 0xb1, 0xc2, 0x8f, 0xf6, 0xdf, 0x0e, 0x3f, 0x71, 0x5d, 0xdb,
-	0x1e, 0x85, 0x68, 0x0b, 0xe6, 0x35, 0x8b, 0x5b, 0xd3, 0x1b, 0xbb, 0x15, 0x1b, 0xeb, 0x93, 0x63,
-	0x63, 0x86, 0x3e, 0x06, 0x08, 0x32, 0x21, 0x59, 0xdf, 0xef, 0x8b, 0x9e, 0x3b, 0xbf, 0xe1, 0x6c,
-	0x36, 0xec, 0x91, 0x1a, 0x06, 0x3f, 0x11, 0x3d, 0x6f, 0x15, 0x56, 0x4e, 0x59, 0x48, 0x9f, 0x26,
-	0xe4, 0x15, 0x89, 0x62, 0xf2, 0x2c, 0xa6, 0xfa, 0xca, 0xbc, 0x63, 0x40, 0x3a, 0x80, 0x53, 0x26,
-	0x0f, 0x59, 0x96, 0x84, 0xe6, 0x22, 0x8b, 0x91, 0x3b, 0x53, 0x47, 0xee, 0xfd, 0x75, 0x16, 0xde,
-	0xd7, 0xe0, 0x31, 0xbd, 0x3e, 0x89, 0x44, 0x9f, 0xc8, 0xe0, 0xc2, 0x10, 0xfe, 0x1c, 0x96, 0x39,
-	0x7d, 0x99, 0x51, 0x21, 0x7d, 0x21, 0x09, 0x97, 0xfe, 0x0b, 0x7a, 0xad, 0x99, 0x17, 0x77, 0xeb,
-	0x6f, 0xdf, 0xac, 0xcf, 0x1d, 0xd3, 0x6b, 0xdc, 0xb6, 0x16, 0x67, 0xca, 0xe0, 0x98, 0x5e, 0xa3,
-	0x6d, 0xc8, 0x21, 0x9f, 0x26, 0xa1, 0x76, 0x99, 0x2d, 0xbb, 0xb4, 0xec, 0xfa, 0x41, 0x12, 0x2a,
-	0x87, 0x13, 0xe8, 0xf4, 0xed, 0xb6, 0x34, 0xf4, 0x75, 0x54, 0xfa, 0xe2, 0x9b, 0xf7, 0xbc, 0xaa,
-	0xec, 0xa9, 0xf5, 0x42, 0xee, 0xda, 0x43, 0x5f, 0xbd, 0x84, 0x8e, 0xa1, 0x2d, 0xb2, 0x5e, 0x8f,
-	0x0a, 0x39, 0x60, 0xab, 0x4d, 0xcd, 0xb6, 0x34, 0x70, 0xd5, 0x2b, 0xde, 0xbf, 0x1c, 0xf0, 0x30,
-	0x25, 0xe1, 0x37, 0x91, 0xbc, 0x88, 0x92, 0xa7, 0x49, 0x40, 0xb9, 0x24, 0x51, 0x22, 0xaf, 0x8f,
-	0x12, 0x49, 0xf9, 0x2b, 0x12, 0x9b, 0x8b, 0x7a, 0x04, 0x4b, 0x9c, 0x92, 0xd0, 0x1f, 0x14, 0x82,
-	0x7d, 0xc9, 0x1f, 0x16, 0xb6, 0x54, 0xd5, 0xb2, 0x75, 0x11, 0x07, 0x5b, 0xe7, 0xb9, 0x91, 0xcd,
-	0x77, 0x4b, 0xb9, 0x0e, 0x40, 0x84, 0x01, 0xd1, 0xab, 0x48, 0xc8, 0x28, 0xe9, 0x15, 0xf8, 0x66,
-	0xa7, 0xe7, 0x5b, 0xce, 0xdd, 0x07, 0x0b, 0xde, 0x5d, 0xf8, 0xe0, 0x9c, 0x93, 0x44, 0x90, 0x40,
-	0x46, 0x2c, 0xd9, 0x79, 0xc6, 0xb8, 0xa4, 0xe6, 0xd1, 0x78, 0xdf, 0xc2, 0x4a, 0x61, 0xe9, 0x49,
-	0x26, 0x6c, 0xee, 0xf7, 0x00, 0xd2, 0x4c, 0x5c, 0x50, 0xea, 0xcb, 0xab, 0xc4, 0x1e, 0xa7, 0x5b,
-	0x71, 0x83, 0x05, 0xe7, 0xfc, 0xfd, 0x1a, 0xbf, 0xf3, 0xab, 0xc4, 0xfb, 0x00, 0xde, 0x2f, 0xac,
-	0x63, 0x2a, 0xf9, 0xb5, 0xd9, 0xd5, 0x85, 0xd5, 0xd2, 0x42, 0x1a, 0x13, 0xbb, 0xf2, 0x45, 0x69,
-	0xe5, 0x4c, 0x12, 0x99, 0x09, 0x13, 0xd1, 0x2a, 0xcc, 0xa9, 0x52, 0x71, 0x0a, 0xa5, 0xa2, 0x00,
-	0xef, 0x0c, 0x3a, 0xdf, 0xf0, 0x48, 0x52, 0x95, 0x92, 0x44, 0x1a, 0xdb, 0x2f, 0xa1, 0x1e, 0xe9,
-	0x9f, 0xc2, 0x75, 0x36, 0xe6, 0x36, 0x9b, 0xf7, 0xee, 0x56, 0x84, 0x6e, 0x1c, 0xf2, 0x46, 0x62,
-	0xed, 0x1f, 0xd5, 0x16, 0x66, 0x3b, 0x73, 0xde, 0xdf, 0x1c, 0xcb, 0x7a, 0xce, 0xd8, 0xe3, 0xd8,
-	0x16, 0xd8, 0x0e, 0x34, 0xde, 0x29, 0xc3, 0x43, 0x2f, 0x74, 0x0a, 0x1d, 0x12, 0xc8, 0x8c, 0xc4,
-	0xef, 0x96, 0xdb, 0xb6, 0x71, 0x1e, 0x66, 0x76, 0x05, 0xd0, 0xe3, 0x14, 0xd3, 0x97, 0x59, 0xc4,
-	0xa9, 0x38, 0xbf, 0x4a, 0xcc, 0x25, 0x9e, 0xc1, 0xca, 0x1e, 0x4b, 0xc2, 0x48, 0x5d, 0xe1, 0x21,
-	0x89, 0x62, 0x9b, 0x6c, 0xf4, 0x2b, 0x58, 0xb4, 0xbb, 0xbf, 0x22, 0x71, 0x46, 0xed, 0x19, 0xaa,
-	0x7a, 0xd5, 0xd7, 0x6a, 0x1d, 0x37, 0x8d, 0xb5, 0xfe, 0xe1, 0xfd, 0xc3, 0x01, 0x64, 0x5a, 0x18,
-	0xfd, 0x23, 0x0d, 0xf2, 0x07, 0x84, 0xba, 0x50, 0xef, 0x53, 0x21, 0x48, 0x8f, 0x96, 0x52, 0x93,
-	0x83, 0xe8, 0xd7, 0xd0, 0xb0, 0xf5, 0x4e, 0x43, 0x7b, 0xd4, 0xb1, 0xcd, 0x31, 0xbf, 0xaf, 0x81,
-	0x03, 0x7a, 0x00, 0x0b, 0xf9, 0x73, 0xb6, 0x4d, 0xe1, 0x87, 0x9c, 0x07, 0xf6, 0xde, 0xcf, 0xa0,
-	0x71, 0x46, 0x93, 0xe9, 0xc2, 0xb4, 0x69, 0x7f, 0x09, 0x2b, 0x3b, 0xfd, 0x67, 0x51, 0x2f, 0x63,
-	0x99, 0xc0, 0x54, 0x64, 0xb1, 0x9c, 0xee, 0x90, 0x5f, 0x42, 0xf3, 0x92, 0x93, 0x34, 0xa5, 0xa1,
-	0x4f, 0x39, 0x9f, 0x70, 0x4c, 0x4d, 0x87, 0xc1, 0x1a, 0x1f, 0x70, 0xae, 0x6a, 0x04, 0x93, 0xe7,
-	0xf2, 0x21, 0x67, 0x59, 0xba, 0x4f, 0x63, 0x3a, 0xa8, 0x4c, 0x1f, 0x56, 0xad, 0x54, 0xed, 0x31,
-	0xce, 0xb3, 0x54, 0x25, 0xd3, 0x44, 0xf3, 0x11, 0x34, 0xb4, 0xe4, 0xfb, 0xb7, 0xeb, 0x61, 0x41,
-	0xc3, 0x27, 0xa2, 0x87, 0x3c, 0x68, 0xa4, 0x9c, 0x05, 0x54, 0x08, 0x7b, 0xeb, 0x0b, 0x83, 0xea,
-	0xcc, 0x61, 0xef, 0x0c, 0x90, 0xdd, 0xa0, 0xf8, 0xc8, 0x7f, 0x03, 0x60, 0x35, 0x35, 0xd7, 0x91,
-	0xf9, 0xdd, 0xae, 0xd5, 0x91, 0x86, 0xb5, 0xd7, 0x4a, 0x32, 0xfc, 0xa1, 0x12, 0x66, 0x3e, 0x43,
-	0x25, 0x4d, 0x67, 0x92, 0xf1, 0x51, 0x69, 0x12, 0x0a, 0xad, 0x90, 0x26, 0x6d, 0x6d, 0xa4, 0xc9,
-	0x7e, 0xe2, 0xba, 0xb6, 0x3d, 0x0a, 0xbd, 0xb7, 0x2d, 0x68, 0x6a, 0x82, 0x7d, 0x2a, 0x49, 0x14,
-	0xa3, 0x27, 0xd0, 0x49, 0x98, 0xf4, 0x4b, 0x42, 0x6f, 0xde, 0xf0, 0xa7, 0x15, 0x77, 0x5d, 0x31,
-	0x6c, 0xe0, 0xa5, 0xa4, 0x04, 0xa2, 0x13, 0x68, 0x1b, 0xcd, 0x54, 0xbc, 0xcf, 0x55, 0xc0, 0x36,
-	0x79, 0x3f, 0x19, 0xa7, 0x16, 0xa5, 0x83, 0xe1, 0x16, 0x2f, 0x62, 0xe8, 0x6b, 0x40, 0x86, 0xee,
-	0x05, 0xbd, 0xf6, 0x73, 0x65, 0xb2, 0x0f, 0x77, 0x73, 0x1c, 0xe3, 0x6d, 0xdd, 0xc5, 0x1d, 0x7e,
-	0x0b, 0x46, 0x7f, 0x82, 0x0d, 0x2d, 0x30, 0x97, 0x5a, 0x87, 0xfc, 0x6c, 0x28, 0x44, 0x7e, 0x64,
-	0x95, 0xc8, 0xaa, 0xdc, 0xfd, 0xca, 0x89, 0xe7, 0x87, 0x14, 0x0c, 0x7f, 0xc8, 0x27, 0xd9, 0xa0,
-	0x6f, 0xe1, 0x3d, 0x39, 0xec, 0xca, 0x3e, 0x31, 0x0a, 0xa2, 0xc7, 0x96, 0xe6, 0xbd, 0xcf, 0x27,
-	0xcb, 0x42, 0x51, 0x6e, 0x30, 0x92, 0x23, 0x0b, 0x08, 0x43, 0xa7, 0x48, 0xae, 0xe4, 0xc3, 0xbd,
-	0xa3, 0x99, 0x7f, 0x3a, 0x99, 0x79, 0xa0, 0x56, 0xb8, 0x2d, 0xcb, 0x28, 0x7a, 0x0a, 0xcb, 0x45,
-	0x4e, 0xae, 0xa4, 0xc7, 0xad, 0x8f, 0xcd, 0x43, 0xa5, 0x4a, 0xe1, 0x62, 0x58, 0x1a, 0x46, 0xbf,
-	0x83, 0xe2, 0x01, 0xd4, 0x54, 0x24, 0x33, 0xe1, 0x2e, 0x68, 0xde, 0xcf, 0x26, 0xf3, 0x16, 0xa4,
-	0x0c, 0x17, 0x63, 0x33, 0x38, 0x3a, 0x84, 0xc5, 0x4b, 0xa5, 0x37, 0xbe, 0xd1, 0x21, 0xb7, 0xa1,
-	0x39, 0x3f, 0xae, 0xe0, 0xbc, 0x2d, 0x76, 0xb8, 0x79, 0x39, 0x44, 0xd0, 0x43, 0x68, 0x19, 0x1e,
-	0xc9, 0x98, 0xcf, 0xe2, 0xd0, 0x85, 0xc9, 0x44, 0x85, 0xd2, 0xb7, 0x44, 0x06, 0x51, 0x95, 0xc1,
-	0x52, 0x9f, 0x5b, 0x69, 0xd1, 0x53, 0x40, 0x73, 0x6c, 0x65, 0x8c, 0x6a, 0x10, 0x6e, 0xb1, 0x22,
-	0xa6, 0x92, 0x1c, 0xe4, 0x92, 0xe4, 0x3f, 0xd7, 0x9a, 0xe4, 0x2e, 0x8e, 0x4d, 0x72, 0x95, 0x7a,
-	0xe1, 0x76, 0x50, 0x46, 0xd1, 0x57, 0xb0, 0x64, 0x5a, 0x01, 0xb7, 0x8a, 0xe4, 0xb6, 0xc6, 0x46,
-	0x38, 0xaa, 0x5c, 0xb8, 0x15, 0x17, 0x31, 0x15, 0x61, 0xc2, 0x42, 0xea, 0x67, 0xc3, 0x69, 0xdb,
-	0x5d, 0x1a, 0x1b, 0x61, 0xd5, 0x5c, 0x8e, 0xdb, 0x49, 0x19, 0x45, 0x5f, 0x40, 0x4d, 0xd0, 0x24,
-	0x74, 0xdb, 0x9a, 0xe7, 0xc7, 0x15, 0x3c, 0x03, 0x85, 0xc2, 0xda, 0xd2, 0x74, 0x90, 0xe7, 0xd2,
-	0xef, 0x29, 0x3d, 0xf0, 0x43, 0x23, 0x08, 0x6e, 0x67, 0x42, 0x07, 0xa9, 0xd0, 0x0e, 0xd5, 0x41,
-	0xca, 0xb0, 0x7a, 0xb9, 0x79, 0x5b, 0x0f, 0x06, 0x72, 0xe2, 0x2e, 0x8f, 0x7d, 0xb9, 0xd5, 0xd2,
-	0x83, 0x97, 0xf9, 0x6d, 0x5c, 0xb7, 0x50, 0xcb, 0x9c, 0xbf, 0x39, 0x34, 0xbe, 0x85, 0x8e, 0x08,
-	0x8e, 0x9a, 0x7f, 0x0b, 0xd8, 0xed, 0x12, 0xe3, 0x7a, 0x36, 0x74, 0x57, 0xa7, 0x29, 0xb1, 0xc2,
-	0x1c, 0x59, 0x2a, 0x31, 0x83, 0xab, 0x04, 0x93, 0x5c, 0xdc, 0x7d, 0xae, 0xd5, 0xdd, 0x5d, 0x1b,
-	0x9b, 0xe0, 0xaa, 0x39, 0x00, 0xb7, 0x49, 0x19, 0x55, 0x87, 0x37, 0xc2, 0x36, 0xd4, 0x8f, 0x1f,
-	0x8d, 0x3d, 0xfc, 0xa8, 0x30, 0xe2, 0x96, 0x28, 0x62, 0x0f, 0x6a, 0xaf, 0xbf, 0x5b, 0x77, 0x1e,
-	0xd5, 0x16, 0xee, 0x76, 0xd6, 0xbc, 0xcf, 0xb4, 0xf6, 0x3d, 0x61, 0x42, 0x3f, 0x79, 0xb4, 0x06,
-	0xf3, 0x51, 0x12, 0xd2, 0x2b, 0x2b, 0xc9, 0x46, 0xcd, 0x0d, 0xe4, 0xfd, 0x7d, 0x0e, 0xe6, 0xa7,
-	0x1b, 0x54, 0xfe, 0x50, 0x6e, 0xe4, 0x9c, 0xea, 0x3f, 0x76, 0x5a, 0xa1, 0x96, 0x2a, 0x63, 0x2e,
-	0x5d, 0xaf, 0x36, 0xb6, 0x94, 0x48, 0x8e, 0xac, 0xa0, 0x3d, 0x68, 0x65, 0x09, 0xbd, 0x4a, 0x99,
-	0xa0, 0xa1, 0xee, 0x18, 0xb5, 0x69, 0xfe, 0x37, 0xe0, 0xc5, 0x81, 0x93, 0xea, 0x14, 0xdb, 0xd0,
-	0x64, 0x3c, 0xea, 0x45, 0x89, 0xaf, 0xaa, 0x49, 0x6b, 0xcc, 0xfc, 0xee, 0x92, 0xda, 0xf3, 0xed,
-	0x9b, 0xf5, 0x3b, 0xaa, 0xee, 0x8e, 0xf6, 0x31, 0x18, 0x13, 0xf5, 0x0b, 0xfd, 0x12, 0xee, 0x84,
-	0x7a, 0x3e, 0xb0, 0xaa, 0xd1, 0x1d, 0x37, 0x77, 0x99, 0x29, 0x02, 0x5b, 0x6b, 0xf4, 0x8b, 0xfc,
-	0x46, 0xeb, 0x93, 0xdc, 0xf2, 0x04, 0xd8, 0xbb, 0x46, 0xf7, 0x61, 0x2e, 0x61, 0x97, 0xb6, 0xe7,
-	0x4f, 0x35, 0xb4, 0x2b, 0xfb, 0x07, 0xb5, 0xbf, 0x7c, 0xb7, 0x3e, 0x63, 0xa6, 0xcc, 0xcf, 0x1f,
-	0x00, 0x1a, 0xbd, 0x56, 0xb4, 0x00, 0xb5, 0xd3, 0xc7, 0xa7, 0x07, 0x9d, 0x19, 0xd4, 0x84, 0xfa,
-	0xee, 0xce, 0xde, 0xf1, 0xe3, 0xc3, 0xc3, 0x8e, 0x83, 0x5a, 0xd0, 0x38, 0x3a, 0x39, 0x39, 0xd8,
-	0x3f, 0xda, 0x39, 0x3f, 0xe8, 0xcc, 0xee, 0x7e, 0xf4, 0xfa, 0x7f, 0xdd, 0x99, 0xd7, 0x37, 0x5d,
-	0xe7, 0xdf, 0x37, 0x5d, 0xe7, 0x3f, 0x37, 0x5d, 0xe7, 0xbf, 0x37, 0x5d, 0xe7, 0xcf, 0xff, 0xef,
-	0xce, 0xfc, 0xbe, 0x6e, 0x83, 0xfe, 0x3e, 0x00, 0x00, 0xff, 0xff, 0x1e, 0xeb, 0xde, 0x56, 0x26,
-	0x12, 0x00, 0x00,
+	// 1673 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x57, 0x4f, 0x73, 0x23, 0x47,
+	0x15, 0xd7, 0xd8, 0xf2, 0xca, 0x7a, 0xb2, 0x65, 0xb9, 0xe3, 0x38, 0xb3, 0x86, 0xc8, 0xce, 0x24,
+	0x04, 0x27, 0x07, 0x0b, 0x0c, 0x4b, 0x55, 0x16, 0x38, 0x58, 0xb6, 0x37, 0xd2, 0x1a, 0xdb, 0xa9,
+	0xb1, 0xc3, 0x52, 0x01, 0x6a, 0xaa, 0x77, 0xa6, 0x57, 0x1e, 0x76, 0x34, 0x3d, 0xdb, 0xdd, 0xb3,
+	0xb6, 0x6f, 0x7c, 0x04, 0x8e, 0x70, 0xe3, 0x42, 0x15, 0x07, 0x8a, 0xe2, 0x43, 0x70, 0xd8, 0x23,
+	0x47, 0x4e, 0x2e, 0x30, 0xdf, 0x62, 0x4f, 0x54, 0xff, 0x19, 0x69, 0x24, 0x8d, 0x14, 0xd5, 0xde,
+	0x46, 0xef, 0xcf, 0xaf, 0x5f, 0xbf, 0xd7, 0xef, 0xfd, 0x9e, 0xc0, 0xf1, 0xa9, 0xff, 0x92, 0x51,
+	0xec, 0x5f, 0xb5, 0x92, 0x97, 0xbd, 0x96, 0xfa, 0x4a, 0x9e, 0xb7, 0x08, 0x63, 0x94, 0xf1, 0xbd,
+	0x84, 0x51, 0x41, 0xd1, 0xfa, 0xc0, 0x66, 0xcf, 0xe8, 0xb7, 0x3e, 0x29, 0x76, 0xeb, 0x13, 0x81,
+	0x03, 0x2c, 0xb0, 0x76, 0xdc, 0xda, 0x29, 0xb6, 0xca, 0x59, 0x7c, 0x3a, 0x6a, 0x91, 0x8a, 0x30,
+	0x6a, 0x5d, 0x45, 0x7e, 0x4b, 0x84, 0x7d, 0xc2, 0x05, 0xee, 0x27, 0xc6, 0x6e, 0xa3, 0x47, 0x7b,
+	0x54, 0x7d, 0xb6, 0xe4, 0x97, 0x96, 0x3a, 0xff, 0x58, 0x80, 0xf7, 0xce, 0xa8, 0xf8, 0x05, 0xc1,
+	0x9c, 0x74, 0x68, 0x14, 0x10, 0x76, 0x2c, 0xe3, 0x46, 0x47, 0x50, 0x61, 0x24, 0x89, 0x42, 0x1f,
+	0xdb, 0xd6, 0x8e, 0xb5, 0x5b, 0xdb, 0xff, 0x64, 0x6f, 0xe2, 0x0a, 0x7b, 0xae, 0xb6, 0x38, 0x22,
+	0xdc, 0x67, 0x61, 0x22, 0x28, 0x6b, 0x97, 0xdf, 0xdc, 0x6d, 0x97, 0xdc, 0xcc, 0x15, 0x7d, 0x09,
+	0x2b, 0x91, 0x44, 0xf6, 0xae, 0x14, 0xb4, 0xbd, 0x30, 0x3f, 0x94, 0x5b, 0x8b, 0x86, 0x31, 0xa1,
+	0x47, 0xb0, 0xcc, 0x70, 0xdc, 0x23, 0x5e, 0x18, 0xd8, 0x8b, 0x3b, 0xd6, 0xee, 0x62, 0x7b, 0x4b,
+	0x9e, 0x74, 0x7f, 0xb7, 0x5d, 0x71, 0xa5, 0xbc, 0x7b, 0xf4, 0x76, 0xf8, 0xe9, 0x56, 0x94, 0x6d,
+	0x37, 0x40, 0x7b, 0xb0, 0xa4, 0x50, 0xec, 0xb2, 0x3a, 0xd8, 0x2e, 0x38, 0x58, 0xdd, 0xdc, 0xd5,
+	0x66, 0xe8, 0x63, 0x00, 0x3f, 0xe5, 0x82, 0xf6, 0xbd, 0x3e, 0xef, 0xd9, 0x4b, 0x3b, 0xd6, 0x6e,
+	0xd5, 0x5c, 0xa9, 0xaa, 0xe5, 0xa7, 0xbc, 0xe7, 0x6c, 0xc2, 0xc6, 0x19, 0x0d, 0xc8, 0xd7, 0x31,
+	0x7e, 0x8d, 0xc3, 0x08, 0x3f, 0x8f, 0x88, 0x4a, 0x99, 0x73, 0x02, 0x48, 0x05, 0x70, 0x46, 0xc5,
+	0x13, 0x9a, 0xc6, 0x81, 0x4e, 0x64, 0x3e, 0x72, 0x6b, 0xee, 0xc8, 0x9d, 0x3f, 0x2d, 0xc0, 0xfb,
+	0x4a, 0x78, 0x42, 0x6e, 0x4f, 0x43, 0xde, 0xc7, 0xc2, 0xbf, 0xd2, 0x80, 0x3f, 0x82, 0x75, 0x46,
+	0x5e, 0xa5, 0x84, 0x0b, 0x8f, 0x0b, 0xcc, 0x84, 0xf7, 0x92, 0xdc, 0x2a, 0xe4, 0x95, 0x76, 0xe5,
+	0xed, 0xdd, 0xf6, 0xe2, 0x09, 0xb9, 0x75, 0xd7, 0x8c, 0xc5, 0x85, 0x34, 0x38, 0x21, 0xb7, 0xa8,
+	0x05, 0x99, 0xc8, 0x23, 0x71, 0xa0, 0x5c, 0x16, 0x46, 0x5d, 0x56, 0x8d, 0xfe, 0x38, 0x0e, 0xa4,
+	0xc3, 0x29, 0x34, 0xfa, 0xe6, 0x58, 0x12, 0x78, 0x2a, 0x2a, 0x95, 0xf8, 0xda, 0xbe, 0x53, 0x54,
+	0x3d, 0xa9, 0xcf, 0xd5, 0x6e, 0x6d, 0xe8, 0xab, 0x54, 0xe8, 0x04, 0xd6, 0x78, 0xda, 0xeb, 0x11,
+	0x2e, 0x06, 0x68, 0xe5, 0xb9, 0xd1, 0xea, 0x03, 0x57, 0xa5, 0x71, 0xfe, 0x69, 0x81, 0xe3, 0x12,
+	0x1c, 0x3c, 0x0b, 0xc5, 0x55, 0x18, 0x7f, 0x1d, 0xfb, 0x84, 0x09, 0x1c, 0xc6, 0xe2, 0xb6, 0x1b,
+	0x0b, 0xc2, 0x5e, 0xe3, 0x48, 0x27, 0xea, 0x29, 0xd4, 0x19, 0xc1, 0x81, 0x37, 0x68, 0x04, 0xf3,
+	0x92, 0x3f, 0xcc, 0x1d, 0x29, 0xbb, 0x65, 0xef, 0x2a, 0xf2, 0xf7, 0x2e, 0x33, 0x23, 0x53, 0xef,
+	0x55, 0xe9, 0x3a, 0x10, 0x22, 0x17, 0x10, 0xb9, 0x09, 0xb9, 0x08, 0xe3, 0x5e, 0x0e, 0x6f, 0x61,
+	0x7e, 0xbc, 0xf5, 0xcc, 0x7d, 0xa0, 0x70, 0x1e, 0xc2, 0x07, 0x97, 0x0c, 0xc7, 0x1c, 0xfb, 0x22,
+	0xa4, 0xf1, 0xc1, 0x73, 0xca, 0x04, 0xd1, 0x8f, 0xc6, 0xf9, 0x35, 0x6c, 0xe4, 0x54, 0x5f, 0xa5,
+	0xdc, 0xd4, 0xfe, 0x10, 0x20, 0x49, 0xf9, 0x15, 0x21, 0x9e, 0xb8, 0x89, 0xcd, 0x75, 0x9a, 0x05,
+	0x19, 0xcc, 0x39, 0x67, 0xef, 0x57, 0xfb, 0x5d, 0xde, 0xc4, 0xce, 0x07, 0xf0, 0x7e, 0x4e, 0xef,
+	0x12, 0xc1, 0x6e, 0xf5, 0xa9, 0x36, 0x6c, 0x8e, 0x28, 0x92, 0x08, 0x1b, 0xcd, 0x0f, 0x46, 0x34,
+	0x17, 0x02, 0x8b, 0x94, 0xeb, 0x88, 0x36, 0x61, 0x51, 0xb6, 0x8a, 0x95, 0x6b, 0x15, 0x29, 0x70,
+	0x2e, 0xa0, 0xf1, 0x8c, 0x85, 0x82, 0xc8, 0x92, 0xc4, 0x42, 0xdb, 0x7e, 0x01, 0x95, 0x50, 0xfd,
+	0xe4, 0xb6, 0xb5, 0xb3, 0xb8, 0x5b, 0xdb, 0x7f, 0x58, 0x10, 0xba, 0x76, 0xc8, 0x06, 0x89, 0xb1,
+	0x7f, 0x5a, 0x5e, 0x5e, 0x68, 0x2c, 0x3a, 0x7f, 0xb1, 0x0c, 0xea, 0x25, 0xa5, 0xe7, 0x91, 0x69,
+	0xb0, 0x03, 0xa8, 0xbe, 0x53, 0x85, 0x87, 0x5e, 0xe8, 0x0c, 0x1a, 0xd8, 0x17, 0x29, 0x8e, 0xde,
+	0xad, 0xb6, 0x6b, 0xda, 0x79, 0x58, 0xd9, 0x0d, 0x40, 0xe7, 0x89, 0x4b, 0x5e, 0xa5, 0x21, 0x23,
+	0xfc, 0xf2, 0x26, 0xd6, 0x49, 0xbc, 0x80, 0x8d, 0x43, 0x1a, 0x07, 0xa1, 0x4c, 0xe1, 0x13, 0x1c,
+	0x46, 0xa6, 0xd8, 0xe8, 0xa7, 0xb0, 0x62, 0x4e, 0x7f, 0x8d, 0xa3, 0x94, 0x98, 0x3b, 0x14, 0xcd,
+	0xaa, 0x5f, 0x4a, 0xbd, 0x5b, 0xd3, 0xd6, 0xea, 0x87, 0xf3, 0x77, 0x0b, 0x90, 0x1e, 0x61, 0xe4,
+	0x77, 0xc4, 0xcf, 0x1e, 0x10, 0x6a, 0x42, 0xa5, 0x4f, 0x38, 0xc7, 0x3d, 0x32, 0x52, 0x9a, 0x4c,
+	0x88, 0x7e, 0x06, 0x55, 0xd3, 0xef, 0x24, 0x30, 0x57, 0x9d, 0x3a, 0x1c, 0xb3, 0x7c, 0x0d, 0x1c,
+	0xd0, 0x63, 0x58, 0xce, 0x9e, 0xb3, 0x19, 0x0a, 0xdf, 0xe6, 0x3c, 0xb0, 0x77, 0x7e, 0x08, 0xd5,
+	0x0b, 0x12, 0xcf, 0x17, 0xa6, 0x29, 0xfb, 0x2b, 0xd8, 0x38, 0xe8, 0x3f, 0x0f, 0x7b, 0x29, 0x4d,
+	0xb9, 0x4b, 0x78, 0x1a, 0x89, 0xf9, 0x2e, 0xf9, 0x05, 0xd4, 0xae, 0x19, 0x4e, 0x12, 0x12, 0x78,
+	0x84, 0xb1, 0x19, 0xd7, 0x54, 0x70, 0x2e, 0x18, 0xe3, 0x63, 0xc6, 0x64, 0x8f, 0xb8, 0xf8, 0x85,
+	0xf8, 0x92, 0xd1, 0x34, 0x39, 0x22, 0x11, 0x19, 0x74, 0xa6, 0x07, 0x9b, 0x86, 0xaa, 0x0e, 0x29,
+	0x63, 0x69, 0x22, 0x8b, 0xa9, 0xa3, 0xf9, 0x08, 0xaa, 0x8a, 0xf2, 0xbd, 0xf1, 0x7e, 0x58, 0x56,
+	0xe2, 0x53, 0xde, 0x43, 0x0e, 0x54, 0x13, 0x46, 0x7d, 0xc2, 0xb9, 0xc9, 0xfa, 0xf2, 0xa0, 0x3b,
+	0x33, 0xb1, 0x73, 0x01, 0xc8, 0x1c, 0x90, 0x7f, 0xe4, 0x3f, 0x07, 0x30, 0x9c, 0x9a, 0xf1, 0xc8,
+	0x52, 0xbb, 0x69, 0x78, 0xa4, 0x6a, 0xec, 0x15, 0x93, 0x0c, 0x7f, 0xc8, 0x82, 0xe9, 0xcf, 0x40,
+	0x52, 0xd3, 0x85, 0xa0, 0x6c, 0x92, 0x9a, 0xb8, 0x94, 0x16, 0x50, 0x93, 0xb2, 0xd6, 0xd4, 0x64,
+	0x3e, 0xdd, 0x8a, 0xb2, 0xed, 0x06, 0xce, 0x5f, 0xeb, 0x50, 0x53, 0x00, 0x47, 0x44, 0xe0, 0x30,
+	0x42, 0x2e, 0x34, 0x62, 0x2a, 0xbc, 0x11, 0xa2, 0xd7, 0x6f, 0xf8, 0xd3, 0x82, 0x5c, 0x17, 0x2c,
+	0x1b, 0x9d, 0x92, 0x5b, 0x8f, 0x47, 0xc4, 0xe8, 0x1c, 0xd6, 0x34, 0x6b, 0x4a, 0xe4, 0x17, 0x32,
+	0x64, 0x53, 0xbe, 0xef, 0x4d, 0xe3, 0x8b, 0x91, 0xab, 0x75, 0xe4, 0x00, 0xcf, 0x4b, 0xd1, 0xaf,
+	0x00, 0x69, 0xc0, 0x97, 0xe4, 0xd6, 0xcb, 0xd8, 0xc9, 0x3c, 0xde, 0xdd, 0x69, 0x98, 0xe3, 0xdc,
+	0xdb, 0x29, 0xb9, 0x0d, 0x36, 0xa6, 0x40, 0xbf, 0xb7, 0x60, 0x47, 0xf1, 0xcc, 0xb5, 0xa2, 0x23,
+	0x2f, 0x1d, 0xf2, 0x91, 0x17, 0x1a, 0x42, 0x32, 0x64, 0xf7, 0xa8, 0x70, 0xf1, 0xf9, 0x36, 0x22,
+	0xeb, 0x94, 0xdc, 0x0f, 0xd9, 0x2c, 0x2b, 0xf4, 0x5b, 0x78, 0x4f, 0x0c, 0xc7, 0xb3, 0x87, 0x35,
+	0x95, 0xa8, 0xfd, 0xa5, 0xb6, 0xff, 0xf9, 0x6c, 0x7e, 0xc8, 0xf3, 0x4e, 0xa7, 0xe4, 0x22, 0x31,
+	0xa1, 0x42, 0x97, 0xd0, 0xc8, 0xc3, 0x4b, 0x26, 0xb1, 0x1f, 0x28, 0xec, 0xef, 0xcf, 0xc6, 0x1e,
+	0x10, 0x57, 0xa7, 0xe4, 0xae, 0x89, 0x51, 0x39, 0x7a, 0x06, 0xeb, 0x79, 0x54, 0x26, 0x79, 0xc8,
+	0xae, 0x4c, 0x2d, 0x48, 0x21, 0x65, 0xc9, 0x82, 0x88, 0x31, 0x05, 0xfa, 0x06, 0xf2, 0x97, 0x90,
+	0x4b, 0x92, 0x48, 0xb9, 0xbd, 0xac, 0x90, 0x3f, 0x9b, 0x8d, 0x9c, 0x63, 0xb6, 0x4e, 0xc9, 0xcd,
+	0xc7, 0xa7, 0x35, 0xa8, 0x03, 0x2b, 0xd7, 0x92, 0x80, 0x3c, 0x4d, 0x4c, 0x76, 0x55, 0xa1, 0x7e,
+	0x5c, 0x80, 0x3a, 0xce, 0x7e, 0x9d, 0x92, 0x5b, 0xbb, 0x1e, 0xca, 0x50, 0x17, 0x56, 0x35, 0x92,
+	0xa0, 0xd4, 0xa3, 0x51, 0x60, 0xc3, 0x6c, 0xa8, 0xdc, 0x34, 0x18, 0x40, 0x69, 0x99, 0x6c, 0x16,
+	0x9a, 0x78, 0xcc, 0xf0, 0x8d, 0x5a, 0x0d, 0x6a, 0x53, 0x9b, 0x65, 0x92, 0x98, 0x64, 0xb3, 0xd0,
+	0xbc, 0x54, 0x16, 0xdc, 0xcf, 0x98, 0xca, 0x7b, 0xa1, 0xa8, 0xca, 0x5e, 0x99, 0x5a, 0xf0, 0x22,
+	0x52, 0x93, 0x05, 0xf7, 0x47, 0xe5, 0xe8, 0x0c, 0xea, 0x7a, 0x46, 0x30, 0x43, 0x55, 0xf6, 0xea,
+	0xd4, 0x28, 0x27, 0x29, 0x4d, 0x46, 0x19, 0xe5, 0xa5, 0x32, 0xca, 0x98, 0x06, 0xc4, 0x4b, 0x87,
+	0x8b, 0xb8, 0x5d, 0x9f, 0x1a, 0x65, 0xd1, 0xca, 0x2e, 0xa3, 0x8c, 0x47, 0xe5, 0x68, 0x1f, 0xca,
+	0x9c, 0xc4, 0x81, 0xbd, 0xa6, 0x90, 0xbe, 0x5b, 0x80, 0x34, 0xa0, 0xaf, 0x4e, 0xc9, 0x55, 0xb6,
+	0x7a, 0xb8, 0xbc, 0x10, 0x5e, 0x4f, 0xd2, 0x85, 0x17, 0x68, 0xbe, 0xb0, 0x1b, 0x33, 0x86, 0x4b,
+	0x01, 0xb5, 0xe8, 0xe1, 0x32, 0xaa, 0x90, 0x6f, 0x39, 0x9b, 0xfb, 0xfe, 0x80, 0x6f, 0xec, 0xf5,
+	0xa9, 0x6f, 0xb9, 0x98, 0x9b, 0xe4, 0x5b, 0x66, 0xe3, 0x1a, 0x35, 0x63, 0x0d, 0x76, 0xf6, 0x06,
+	0xd1, 0xf4, 0x19, 0x3b, 0xc1, 0x49, 0x6a, 0xc6, 0xe6, 0xa5, 0xe3, 0x8d, 0xc7, 0xd4, 0x02, 0x69,
+	0x6f, 0xce, 0xd3, 0x78, 0xb9, 0x65, 0x73, 0xac, 0xf1, 0xb4, 0x46, 0x16, 0x1b, 0x67, 0x3b, 0x80,
+	0xc7, 0xd4, 0x12, 0x60, 0x6f, 0x4d, 0x2d, 0x76, 0xd1, 0xba, 0x20, 0x8b, 0x8d, 0x47, 0xe5, 0x32,
+	0x05, 0x9a, 0x01, 0x87, 0x34, 0xf3, 0x9d, 0xa9, 0x29, 0x98, 0x64, 0x50, 0x99, 0x02, 0x9e, 0x97,
+	0xb6, 0x2b, 0xb0, 0xa4, 0x96, 0xb8, 0xa7, 0xe5, 0xe5, 0x87, 0x8d, 0x2d, 0xe7, 0x33, 0xc5, 0x94,
+	0x5f, 0x51, 0xae, 0xfa, 0x00, 0x6d, 0xc1, 0x52, 0x18, 0x07, 0xe4, 0xc6, 0x10, 0xb8, 0xe6, 0x7e,
+	0x2d, 0x72, 0xfe, 0xb6, 0x08, 0x4b, 0xf3, 0xad, 0x35, 0xbf, 0x19, 0x9d, 0xf6, 0x8c, 0xa8, 0xbf,
+	0x81, 0x8a, 0xcb, 0xea, 0x85, 0x81, 0x8f, 0xe4, 0x59, 0x19, 0x1b, 0x48, 0x24, 0x26, 0x34, 0xe8,
+	0x10, 0x56, 0xd3, 0x98, 0xdc, 0x24, 0x94, 0x93, 0x40, 0x8d, 0x92, 0xf2, 0x3c, 0xff, 0x32, 0xdc,
+	0x95, 0x81, 0x93, 0x1c, 0x20, 0x2d, 0xa8, 0x51, 0x16, 0xf6, 0xc2, 0xd8, 0x93, 0xed, 0xa5, 0x88,
+	0x68, 0xa9, 0x5d, 0x97, 0x67, 0xbe, 0xbd, 0xdb, 0x7e, 0x20, 0x5b, 0xb1, 0x7b, 0xe4, 0x82, 0x36,
+	0x91, 0xbf, 0xd0, 0x4f, 0xe0, 0x41, 0xa0, 0xb6, 0x09, 0x43, 0x2c, 0xcd, 0x69, 0x5b, 0x9a, 0xde,
+	0x39, 0x5c, 0x63, 0x8d, 0x7e, 0x9c, 0x65, 0xb4, 0x32, 0xcb, 0x2d, 0x2b, 0x80, 0xc9, 0x35, 0x7a,
+	0x04, 0x8b, 0x31, 0xbd, 0x36, 0x94, 0x30, 0xd7, 0x8a, 0x2f, 0xed, 0x1f, 0x97, 0xff, 0xf8, 0xe7,
+	0xed, 0x92, 0xde, 0x49, 0x3f, 0x7f, 0x0c, 0x68, 0x32, 0xad, 0x68, 0x19, 0xca, 0x67, 0xe7, 0x67,
+	0xc7, 0x8d, 0x12, 0xaa, 0x41, 0xa5, 0x7d, 0x70, 0x78, 0x72, 0xfe, 0xe4, 0x49, 0xc3, 0x42, 0xab,
+	0x50, 0xed, 0x9e, 0x9e, 0x1e, 0x1f, 0x75, 0x0f, 0x2e, 0x8f, 0x1b, 0x0b, 0xed, 0x8f, 0xde, 0xfc,
+	0xb7, 0x59, 0x7a, 0x73, 0xdf, 0xb4, 0xfe, 0x75, 0xdf, 0xb4, 0xfe, 0x7d, 0xdf, 0xb4, 0xfe, 0x73,
+	0xdf, 0xb4, 0xfe, 0xf0, 0xbf, 0x66, 0xe9, 0x9b, 0x8a, 0x09, 0xfa, 0xff, 0x01, 0x00, 0x00, 0xff,
+	0xff, 0x34, 0x66, 0x37, 0x41, 0x54, 0x12, 0x00, 0x00,
 }

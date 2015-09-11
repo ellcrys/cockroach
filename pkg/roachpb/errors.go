@@ -198,11 +198,58 @@ func (e *Error) setGoError(err error) {
 	}
 	// If the specific error type exists in the detail union, set it.
 	detail := &ErrorDetail{}
-	if detail.SetValue(err) {
-		e.Detail = detail
-	} else if _, isInternalError := err.(*internalError); !isInternalError && isTxnError {
-		panic(fmt.Sprintf("transactionRestartError %T must be an ErrorDetail", err))
+	switch vt := err.(type) {
+	case *NotLeaseHolderError:
+		detail.Value = &ErrorDetail_NotLeaseHolder{vt}
+	case *RangeNotFoundError:
+		detail.Value = &ErrorDetail_RangeNotFound{vt}
+	case *RangeKeyMismatchError:
+		detail.Value = &ErrorDetail_RangeKeyMismatch{vt}
+	case *ReadWithinUncertaintyIntervalError:
+		detail.Value = &ErrorDetail_ReadWithinUncertaintyInterval{vt}
+	case *TransactionAbortedError:
+		detail.Value = &ErrorDetail_TransactionAborted{vt}
+	case *TransactionPushError:
+		detail.Value = &ErrorDetail_TransactionPush{vt}
+	case *TransactionRetryError:
+		detail.Value = &ErrorDetail_TransactionRetry{vt}
+	case *TransactionStatusError:
+		detail.Value = &ErrorDetail_TransactionStatus{vt}
+	case *WriteIntentError:
+		detail.Value = &ErrorDetail_WriteIntent{vt}
+	case *WriteTooOldError:
+		detail.Value = &ErrorDetail_WriteTooOld{vt}
+	case *OpRequiresTxnError:
+		detail.Value = &ErrorDetail_OpRequiresTxn{vt}
+	case *ConditionFailedError:
+		detail.Value = &ErrorDetail_ConditionFailed{vt}
+	case *LeaseRejectedError:
+		detail.Value = &ErrorDetail_LeaseRejected{vt}
+	case *NodeUnavailableError:
+		detail.Value = &ErrorDetail_NodeUnavailable{vt}
+	case *SendError:
+		detail.Value = &ErrorDetail_Send{vt}
+	case *RaftGroupDeletedError:
+		detail.Value = &ErrorDetail_RaftGroupDeleted{vt}
+	case *ReplicaCorruptionError:
+		detail.Value = &ErrorDetail_ReplicaCorruption{vt}
+	case *ReplicaTooOldError:
+		detail.Value = &ErrorDetail_ReplicaTooOld{vt}
+	case *TransactionReplayError:
+		detail.Value = &ErrorDetail_TransactionReplay{vt}
+	case *RangeFrozenError:
+		detail.Value = &ErrorDetail_RangeFrozen{vt}
+	case *AmbiguousResultError:
+		detail.Value = &ErrorDetail_AmbiguousResult{vt}
+	case *StoreNotFoundError:
+		detail.Value = &ErrorDetail_StoreNotFound{vt}
+	default:
+		if _, isInternalError := err.(*internalError); !isInternalError && isTxnError {
+			panic(fmt.Sprintf("transactionRestartError %T must be an ErrorDetail", err))
+		}
+		return
 	}
+	e.Detail = detail
 }
 
 // SetTxn sets the txn and resets the error message.

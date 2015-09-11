@@ -78,8 +78,6 @@ message RaftMessageRequestBatch {
 }
 
 message RaftMessageResponseUnion {
-  option (gogoproto.onlyone) = true;
-
   optional roachpb.Error error = 1;
 }
 

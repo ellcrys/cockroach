@@ -84,10 +84,10 @@ func TestBatchRequestGetArg(t *testing.T) {
 		expB, expG bool
 	}{
 		{[]RequestUnion{}, false, false},
-		{[]RequestUnion{{Get: &GetRequest{}}}, false, true},
-		{[]RequestUnion{{EndTransaction: &EndTransactionRequest{}}, {Get: &GetRequest{}}}, false, true},
-		{[]RequestUnion{{EndTransaction: &EndTransactionRequest{}}}, true, false},
-		{[]RequestUnion{{Get: &GetRequest{}}, {EndTransaction: &EndTransactionRequest{}}}, true, true},
+		{[]RequestUnion{{&RequestUnion_Get{&GetRequest{}}}}, false, true},
+		{[]RequestUnion{{&RequestUnion_EndTransaction{&EndTransactionRequest{}}}, {&RequestUnion_Get{&GetRequest{}}}}, false, true},
+		{[]RequestUnion{{&RequestUnion_EndTransaction{&EndTransactionRequest{}}}}, true, false},
+		{[]RequestUnion{{&RequestUnion_Get{&GetRequest{}}}, {&RequestUnion_EndTransaction{&EndTransactionRequest{}}}}, true, true},
 	}
 
 	for i, c := range testCases {

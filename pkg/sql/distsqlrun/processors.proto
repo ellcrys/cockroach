@@ -94,19 +94,19 @@ message PostProcessSpec {
 }
 
 message ProcessorCoreUnion {
-  option (gogoproto.onlyone) = true;
-
-  optional NoopCoreSpec noop = 1;
-  optional TableReaderSpec tableReader = 2;
-  optional JoinReaderSpec joinReader = 3;
-  optional SorterSpec sorter = 4;
-  optional AggregatorSpec aggregator = 5;
-  optional DistinctSpec distinct = 7;
-  optional MergeJoinerSpec mergeJoiner = 8;
-  optional HashJoinerSpec hashJoiner = 9;
-  optional ValuesCoreSpec values = 10;
-  optional BackfillerSpec backfiller = 11;
-  optional AlgebraicSetOpSpec setOp = 12;
+  oneof value {
+    NoopCoreSpec noop = 1;
+    TableReaderSpec tableReader = 2;
+    JoinReaderSpec joinReader = 3;
+    SorterSpec sorter = 4;
+    AggregatorSpec aggregator = 5;
+    DistinctSpec distinct = 7;
+    MergeJoinerSpec mergeJoiner = 8;
+    HashJoinerSpec hashJoiner = 9;
+    ValuesCoreSpec values = 10;
+    BackfillerSpec backfiller = 11;
+    AlgebraicSetOpSpec setOp = 12;
+  }
 }
 
 // NoopCoreSpec indicates a "no-op" processor core. This is used when we just

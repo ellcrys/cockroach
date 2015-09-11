@@ -382,7 +382,70 @@ func (ru ResponseUnion) GetInner() Response {
 // before being repopulated.
 func (ru *RequestUnion) MustSetInner(args Request) {
 	ru.Reset()
-	if !ru.SetValue(args) {
+	switch t := args.(type) {
+	case *GetRequest:
+		ru.Value = &RequestUnion_Get{t}
+	case *PutRequest:
+		ru.Value = &RequestUnion_Put{t}
+	case *ConditionalPutRequest:
+		ru.Value = &RequestUnion_ConditionalPut{t}
+	case *IncrementRequest:
+		ru.Value = &RequestUnion_Increment{t}
+	case *DeleteRequest:
+		ru.Value = &RequestUnion_Delete{t}
+	case *DeleteRangeRequest:
+		ru.Value = &RequestUnion_DeleteRange{t}
+	case *ScanRequest:
+		ru.Value = &RequestUnion_Scan{t}
+	case *BeginTransactionRequest:
+		ru.Value = &RequestUnion_BeginTransaction{t}
+	case *EndTransactionRequest:
+		ru.Value = &RequestUnion_EndTransaction{t}
+	case *AdminSplitRequest:
+		ru.Value = &RequestUnion_AdminSplit{t}
+	case *AdminMergeRequest:
+		ru.Value = &RequestUnion_AdminMerge{t}
+	case *AdminTransferLeaseRequest:
+		ru.Value = &RequestUnion_AdminTransferLease{t}
+	case *HeartbeatTxnRequest:
+		ru.Value = &RequestUnion_HeartbeatTxn{t}
+	case *GCRequest:
+		ru.Value = &RequestUnion_Gc{t}
+	case *PushTxnRequest:
+		ru.Value = &RequestUnion_PushTxn{t}
+	case *RangeLookupRequest:
+		ru.Value = &RequestUnion_RangeLookup{t}
+	case *ResolveIntentRequest:
+		ru.Value = &RequestUnion_ResolveIntent{t}
+	case *ResolveIntentRangeRequest:
+		ru.Value = &RequestUnion_ResolveIntentRange{t}
+	case *MergeRequest:
+		ru.Value = &RequestUnion_Merge{t}
+	case *TruncateLogRequest:
+		ru.Value = &RequestUnion_TruncateLog{t}
+	case *RequestLeaseRequest:
+		ru.Value = &RequestUnion_RequestLease{t}
+	case *ReverseScanRequest:
+		ru.Value = &RequestUnion_ReverseScan{t}
+	case *ComputeChecksumRequest:
+		ru.Value = &RequestUnion_ComputeChecksum{t}
+	case *DeprecatedVerifyChecksumRequest:
+		ru.Value = &RequestUnion_DeprecatedVerifyChecksum{t}
+	case *CheckConsistencyRequest:
+		ru.Value = &RequestUnion_CheckConsistency{t}
+	case *NoopRequest:
+		ru.Value = &RequestUnion_Noop{t}
+	case *InitPutRequest:
+		ru.Value = &RequestUnion_InitPut{t}
+	case *ChangeFrozenRequest:
+		ru.Value = &RequestUnion_ChangeFrozen{t}
+	case *TransferLeaseRequest:
+		ru.Value = &RequestUnion_TransferLease{t}
+	case *LeaseInfoRequest:
+		ru.Value = &RequestUnion_LeaseInfo{t}
+	case *WriteBatchRequest:
+		ru.Value = &RequestUnion_WriteBatch{t}
+	default:
 		panic(fmt.Sprintf("%T excludes %T", ru, args))
 	}
 }
@@ -392,7 +455,68 @@ func (ru *RequestUnion) MustSetInner(args Request) {
 // before being repopulated.
 func (ru *ResponseUnion) MustSetInner(reply Response) {
 	ru.Reset()
-	if !ru.SetValue(reply) {
+	switch t := reply.(type) {
+	case *GetResponse:
+		ru.Value = &ResponseUnion_Get{t}
+	case *PutResponse:
+		ru.Value = &ResponseUnion_Put{t}
+	case *ConditionalPutResponse:
+		ru.Value = &ResponseUnion_ConditionalPut{t}
+	case *IncrementResponse:
+		ru.Value = &ResponseUnion_Increment{t}
+	case *DeleteResponse:
+		ru.Value = &ResponseUnion_Delete{t}
+	case *DeleteRangeResponse:
+		ru.Value = &ResponseUnion_DeleteRange{t}
+	case *ScanResponse:
+		ru.Value = &ResponseUnion_Scan{t}
+	case *BeginTransactionResponse:
+		ru.Value = &ResponseUnion_BeginTransaction{t}
+	case *EndTransactionResponse:
+		ru.Value = &ResponseUnion_EndTransaction{t}
+	case *AdminSplitResponse:
+		ru.Value = &ResponseUnion_AdminSplit{t}
+	case *AdminMergeResponse:
+		ru.Value = &ResponseUnion_AdminMerge{t}
+	case *AdminTransferLeaseResponse:
+		ru.Value = &ResponseUnion_AdminTransferLease{t}
+	case *HeartbeatTxnResponse:
+		ru.Value = &ResponseUnion_HeartbeatTxn{t}
+	case *GCResponse:
+		ru.Value = &ResponseUnion_Gc{t}
+	case *PushTxnResponse:
+		ru.Value = &ResponseUnion_PushTxn{t}
+	case *RangeLookupResponse:
+		ru.Value = &ResponseUnion_RangeLookup{t}
+	case *ResolveIntentResponse:
+		ru.Value = &ResponseUnion_ResolveIntent{t}
+	case *ResolveIntentRangeResponse:
+		ru.Value = &ResponseUnion_ResolveIntentRange{t}
+	case *MergeResponse:
+		ru.Value = &ResponseUnion_Merge{t}
+	case *TruncateLogResponse:
+		ru.Value = &ResponseUnion_TruncateLog{t}
+	case *RequestLeaseResponse:
+		ru.Value = &ResponseUnion_RequestLease{t}
+	case *ReverseScanResponse:
+		ru.Value = &ResponseUnion_ReverseScan{t}
+	case *ComputeChecksumResponse:
+		ru.Value = &ResponseUnion_ComputeChecksum{t}
+	case *DeprecatedVerifyChecksumResponse:
+		ru.Value = &ResponseUnion_DeprecatedVerifyChecksum{t}
+	case *CheckConsistencyResponse:
+		ru.Value = &ResponseUnion_CheckConsistency{t}
+	case *NoopResponse:
+		ru.Value = &ResponseUnion_Noop{t}
+	case *InitPutResponse:
+		ru.Value = &ResponseUnion_InitPut{t}
+	case *ChangeFrozenResponse:
+		ru.Value = &ResponseUnion_ChangeFrozen{t}
+	case *LeaseInfoResponse:
+		ru.Value = &ResponseUnion_LeaseInfo{t}
+	case *WriteBatchResponse:
+		ru.Value = &ResponseUnion_WriteBatch{t}
+	default:
 		panic(fmt.Sprintf("%T excludes %T", ru, reply))
 	}
 }

@@ -62,6 +62,9 @@ func initFields() {
 		if !ok {
 			panic(fmt.Sprintf("invalid response field %s", field))
 		}
+		// This doesn't work anymore because `respField.Type` is an interface
+		// type, and finding types that implement this interface is ...
+		// impossible?
 		info.responseType = respField.Type.Elem().Name()
 		fields = append(fields, info)
 	}

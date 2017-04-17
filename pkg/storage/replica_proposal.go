@@ -52,13 +52,6 @@ type ProposalData struct {
 	// The caller's context, used for logging proposals and reproposals.
 	ctx context.Context
 
-	// idKey uniquely identifies this proposal.
-	// TODO(andreimatei): idKey is legacy at this point: We could easily key
-	// commands by their MaxLeaseIndex, and doing so should be ok with a stop-
-	// the-world migration. However, various test facilities depend on the
-	// command ID for e.g. replay protection.
-	idKey storagebase.CmdIDKey
-
 	// proposedAtTicks is the (logical) time at which this command was
 	// last (re-)proposed.
 	proposedAtTicks int

@@ -46,7 +46,6 @@ has the form
 ```go
 type pendingCmd struct {
   ctx     context.Context
-  idKey   storagebase.CmdIDKey
   done    chan roachpb.ResponseWithError // Used to signal waiting RPC handler
   raftCmd struct {
       RangeID       RangeID

@@ -21,13 +21,9 @@ import (
 	"golang.org/x/net/context"
 )
 
-// CmdIDKey is a Raft command id.
-type CmdIDKey string
-
 // FilterArgs groups the arguments to a ReplicaCommandFilter.
 type FilterArgs struct {
 	Ctx   context.Context
-	CmdID CmdIDKey
 	Index int
 	Sid   roachpb.StoreID
 	Req   roachpb.Request
@@ -37,7 +33,6 @@ type FilterArgs struct {
 // ApplyFilterArgs groups the arguments to a ReplicaApplyFilter.
 type ApplyFilterArgs struct {
 	ReplicatedEvalResult
-	CmdID   CmdIDKey
 	RangeID roachpb.RangeID
 	StoreID roachpb.StoreID
 }

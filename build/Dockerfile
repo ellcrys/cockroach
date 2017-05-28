@@ -68,8 +68,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     yarn
 
 RUN mkdir crosstool-ng \
- && curl -fsSL http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.23.0.tar.xz | tar --strip-components=1 -C crosstool-ng -xJ \
+ && git clone --depth 1 https://github.com/crosstool-ng/crosstool-ng.git \
  && cd crosstool-ng \
+ && ./bootstrap \
  && ./configure --prefix /usr/local/ct-ng \
  && make -j$(nproc) \
  && make install \

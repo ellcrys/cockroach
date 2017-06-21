@@ -40,8 +40,6 @@ import (
 	"time"
 
 	"golang.org/x/oauth2"
-
-	"github.com/google/go-github/github"
 )
 
 const githubAPITokenEnv = "GITHUB_API_TOKEN"
@@ -155,13 +153,13 @@ func main() {
 	} else {
 		log.Printf("GitHub API token environment variable %s is not set", githubAPITokenEnv)
 	}
-	client := github.NewClient(httpClient)
+	client := githubql.NewClient(httpClient)
 
 	pulls, _, err := client.PullRequests.List(ctx, org, repo, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var currentPull *github.PullRequest
+	var currentPull *githubql.PullRequest
 	for _, pull := range pulls {
 		if *pull.Head.SHA == sha {
 			currentPull = pull
@@ -178,7 +176,7 @@ func main() {
 		org,
 		repo,
 		*currentPull.Number,
-		github.RawOptions{Type: github.Patch},
+		githubql.RawOptions{Type: githubql.Patch},
 	)
 	if err != nil {
 		log.Fatal(err)

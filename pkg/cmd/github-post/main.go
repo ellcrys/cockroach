@@ -27,8 +27,8 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/google/go-github/github"
 	"github.com/pkg/errors"
+	"github.com/shurcooL/githubql"
 	"github.com/tebeka/go2xunit/lib"
 )
 
@@ -59,9 +59,37 @@ func main() {
 
 	ctx := context.Background()
 
-	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(
+	client := githubql.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
 	)))
+
+	searchIssues := func() {
+		var query struct {
+			Search struct {
+				First githubql.Int
+				Query githubql.String
+				Type  githubql.SearchType
+			}
+			Nodes []struct {
+				Issue struct {
+					Number githubql.Int
+				}
+			}
+		}
+		query.Search.First = 100
+		query.Search.Query = "repo:cockroachdb/cockroach state:open teamcity: failed tests on master"
+		query.Search.Type = githubql.Issue
+		// search(first: 100, query:, type:ISSUE) {
+		//   nodes {
+		//     ... on Issue {
+		//       number
+		//       repository {
+		//         nameWithOwner
+		//       }
+		//     }
+		//   }
+		// }
+	}
 
 	if err := runGH(ctx, os.Stdin, client.Issues.Create, client.Search.Issues, client.Issues.CreateComment); err != nil {
 		log.Fatal(err)
@@ -108,9 +136,9 @@ func trimIssueRequestBody(message string, usedCharacters int) string {
 func runGH(
 	ctx context.Context,
 	input io.Reader,
-	createIssue func(ctx context.Context, owner string, repo string, issue *github.IssueRequest) (*github.Issue, *github.Response, error),
-	searchIssues func(ctx context.Context, query string, opt *github.SearchOptions) (*github.IssuesSearchResult, *github.Response, error),
-	createComment func(ctx context.Context, owner string, repo string, number int, comment *github.IssueComment) (*github.IssueComment, *github.Response, error),
+	createIssue func(ctx context.Context, owner string, repo string, issue *githubql.IssueRequest) (*githubql.Issue, *githubql.Response, error),
+	searchIssues func(ctx context.Context, query string, opt *githubql.SearchOptions) (*githubql.IssuesSearchResult, *githubql.Response, error),
+	createComment func(ctx context.Context, owner string, repo string, number int, comment *githubql.IssueComment) (*githubql.IssueComment, *githubql.Response, error),
 ) error {
 	sha, ok := os.LookupEnv(teamcityVCSNumberEnv)
 	if !ok {
@@ -152,14 +180,14 @@ func runGH(
 		}
 	}
 	parametersStr := "```\n" + strings.Join(parameters, "\n") + "\n```"
-	const bodyTemplate = `SHA: https://github.com/cockroachdb/cockroach/commits/%s
+	const bodyTemplate = `SHA: https://github.comcom/cockroachdb/cockroach/commits/%s
 
 Parameters:
 %s
 
 Stress build found a failed test: %s`
 
-	newIssueRequest := func(packageName, testName, message string) *github.IssueRequest {
+	newIssueRequest := func(packageName, testName, message string) *githubql.IssueRequest {
 		title := fmt.Sprintf("%s: %s failed under stress",
 			strings.TrimPrefix(packageName, cockroachPkgPrefix), testName)
 		body := fmt.Sprintf(bodyTemplate, sha, parametersStr, u.String()) + "\n\n```\n%s\n```"
@@ -170,16 +198,16 @@ Stress build found a failed test: %s`
 		// following Sprintf.
 		body = fmt.Sprintf(body, trimIssueRequestBody(message, len(body)))
 
-		return &github.IssueRequest{
+		return &githubql.IssueRequest{
 			Title:  &title,
 			Body:   &body,
 			Labels: &issueLabels,
 		}
 	}
 
-	newIssueComment := func(packageName, testname string) *github.IssueComment {
+	newIssueComment := func(packageName, testname string) *githubql.IssueComment {
 		body := fmt.Sprintf(bodyTemplate, sha, parametersStr, u.String())
-		return &github.IssueComment{Body: &body}
+		return &githubql.IssueComment{Body: &body}
 	}
 
 	suites, err := lib.ParseGotest(input, "")
@@ -207,13 +235,13 @@ Stress build found a failed test: %s`
 
 				var foundIssue *int
 
-				result, _, err := searchIssues(ctx, searchQuery, &github.SearchOptions{
-					ListOptions: github.ListOptions{
+				result, _, err := searchIssues(ctx, searchQuery, &githubql.SearchOptions{
+					ListOptions: githubql.ListOptions{
 						PerPage: 1,
 					},
 				})
 				if err != nil {
-					return errors.Wrapf(err, "failed to search GitHub with query %s", github.Stringify(searchQuery))
+					return errors.Wrapf(err, "failed to search GitHub with query %s", githubql.Stringify(searchQuery))
 				}
 				if *result.Total > 0 {
 					foundIssue = result.Issues[0].Number
@@ -221,12 +249,12 @@ Stress build found a failed test: %s`
 
 				if foundIssue == nil {
 					if _, _, err := createIssue(ctx, githubUser, githubRepo, issueRequest); err != nil {
-						return errors.Wrapf(err, "failed to create GitHub issue %s", github.Stringify(issueRequest))
+						return errors.Wrapf(err, "failed to create GitHub issue %s", githubql.Stringify(issueRequest))
 					}
 				} else {
 					comment := newIssueComment(packageName, test.Name)
 					if _, _, err := createComment(ctx, githubUser, githubRepo, *foundIssue, comment); err != nil {
-						return errors.Wrapf(err, "failed to update issue #%d with %s", *foundIssue, github.Stringify(comment))
+						return errors.Wrapf(err, "failed to update issue #%d with %s", *foundIssue, githubql.Stringify(comment))
 					}
 				}
 				posted = true
@@ -243,7 +271,7 @@ Stress build found a failed test: %s`
 		}
 		issueRequest := newIssueRequest(packageName, unknown, inputBuf.String())
 		if _, _, err := createIssue(ctx, githubUser, githubRepo, issueRequest); err != nil {
-			return errors.Wrapf(err, "failed to create GitHub issue %s", github.Stringify(issueRequest))
+			return errors.Wrapf(err, "failed to create GitHub issue %s", githubql.Stringify(issueRequest))
 		}
 	}
 

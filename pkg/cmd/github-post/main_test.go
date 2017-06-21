@@ -23,8 +23,6 @@ import (
 	"strconv"
 	"strings"
 	"testing"
-
-	"github.com/google/go-github/github"
 )
 
 func TestRunGH(t *testing.T) {
@@ -129,7 +127,7 @@ Stress build found a failed test: %s`,
 
 				issueCount := 0
 				commentCount := 0
-				postIssue := func(_ context.Context, owner string, repo string, issue *github.IssueRequest) (*github.Issue, *github.Response, error) {
+				postIssue := func(_ context.Context, owner string, repo string, issue *githubql.IssueRequest) (*githubql.Issue, *githubql.Response, error) {
 					issueCount++
 					if owner != expOwner {
 						t.Fatalf("got %s, expected %s", owner, expOwner)
@@ -146,21 +144,21 @@ Stress build found a failed test: %s`,
 					if length := len(*issue.Body); length > githubIssueBodyMaximumLength {
 						t.Fatalf("issue length %d exceeds (undocumented) maximum %d", length, githubIssueBodyMaximumLength)
 					}
-					return &github.Issue{ID: github.Int(issueID)}, nil, nil
+					return &githubql.Issue{ID: githubql.Int(issueID)}, nil, nil
 				}
-				searchIssues := func(_ context.Context, query string, opt *github.SearchOptions) (*github.IssuesSearchResult, *github.Response, error) {
+				searchIssues := func(_ context.Context, query string, opt *githubql.SearchOptions) (*githubql.IssuesSearchResult, *githubql.Response, error) {
 					total := 0
 					if foundIssue {
 						total = 1
 					}
-					return &github.IssuesSearchResult{
+					return &githubql.IssuesSearchResult{
 						Total: &total,
-						Issues: []github.Issue{
-							{Number: github.Int(issueNumber)},
+						Issues: []githubql.Issue{
+							{Number: githubql.Int(issueNumber)},
 						},
 					}, nil, nil
 				}
-				postComment := func(_ context.Context, owner string, repo string, number int, comment *github.IssueComment) (*github.IssueComment, *github.Response, error) {
+				postComment := func(_ context.Context, owner string, repo string, number int, comment *githubql.IssueComment) (*githubql.IssueComment, *githubql.Response, error) {
 					if owner != expOwner {
 						t.Fatalf("got %s, expected %s", owner, expOwner)
 					}

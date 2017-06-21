@@ -311,16 +311,6 @@
   revision = "316fb6d3f031ae8f4d457c6c5186b9e3ded70435"
 
 [[projects]]
-  name = "github.com/google/go-github"
-  packages = ["github"]
-  revision = "4b7b445665c8ce4f3c10c753b1884e2c4f09e323"
-
-[[projects]]
-  name = "github.com/google/go-querystring"
-  packages = ["query"]
-  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
-
-[[projects]]
   name = "github.com/google/pprof"
   packages = [".","driver","internal/binutils","internal/driver","internal/elfexec","internal/graph","internal/measurement","internal/plugin","internal/report","internal/symbolizer","internal/symbolz","profile","third_party/svg"]
   revision = "c0fb62ec88c411cc91194465e54db2632845b650"
@@ -574,6 +564,18 @@
   revision = "836a144573533ea4da4e6929c235fd348aed1c80"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/shurcooL/githubql"
+  packages = [".","internal/hacky/caseconv"]
+  revision = "e7e57ebcc99dfeeb1c7c82642b47b569a14a6499"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shurcooL/go"
+  packages = ["ctxhttp"]
+  revision = "20b4b0a352116a106a505a8c528b6513e7e0d5c2"
+
+[[projects]]
   name = "github.com/spf13/cobra"
   packages = [".","doc"]
   revision = "7aeaa2cce6ae7e18d2a6ee597b60ee137e999bd9"
@@ -673,6 +675,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f7ab65f3b9d17385a080aadceac05318a94426aac13787c92c6c681480a67411"
+  inputs-digest = "b42e75a06e40c3d1897e8c330e26786ed5524ea5ec28b60e4bfe6f4907bb6bf7"
   solver-name = "gps-cdcl"
   solver-version = 1

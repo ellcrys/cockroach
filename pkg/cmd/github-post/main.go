@@ -63,35 +63,49 @@ func main() {
 		&oauth2.Token{AccessToken: token},
 	)))
 
-	searchIssues := func() {
+	searchIssues := func(ctx context.Context) ([]githubql.Int, error) {
 		var query struct {
 			Search struct {
-				First githubql.Int
-				Query githubql.String
-				Type  githubql.SearchType
-			}
-			Nodes []struct {
-				Issue struct {
-					Number githubql.Int
+				Nodes []struct {
+					Issue struct {
+						Number githubql.Int
+					} `graphql:"... on Issue"`
 				}
-			}
+			} `graphql:"search(first: 1, query: $searchQuery, type: $searchType)"`
 		}
-		query.Search.First = 100
-		query.Search.Query = "repo:cockroachdb/cockroach state:open teamcity: failed tests on master"
-		query.Search.Type = githubql.Issue
-		// search(first: 100, query:, type:ISSUE) {
-		//   nodes {
-		//     ... on Issue {
-		//       number
-		//       repository {
-		//         nameWithOwner
-		//       }
-		//     }
-		//   }
+		variables := map[string]interface{}{
+			"searchQuery": githubql.String("repo:cockroachdb/cockroach state:open teamcity: failed tests on master"),
+			"searchType":  githubql.Issue,
+		}
+
+		if err := client.Query(ctx, &query, variables); err != nil {
+			return nil, err
+		}
+		numbers := make([]githubql.Int, len(query.Search.Nodes))
+		for i, node := range query.Search.Nodes {
+			numbers[i] = node.Issue.Number
+		}
+		return numbers, nil
+	}
+
+	createIssue := func() error {
+		// var m struct {
+		// 	AddReaction struct {
+		// 		Reaction struct {
+		// 			Content githubql.ReactionContent
+		// 		}
+		// 		Subject struct {
+		// 			ID githubql.ID
+		// 		}
+		// 	} `graphql:"addReaction(input: $input)"`
+		// }
+		// input := githubql.AddReactionInput{
+		// 	SubjectID: targetIssue.ID, // ID of the target issue from a previous query.
+		// 	Content:   githubql.Hooray,
 		// }
 	}
 
-	if err := runGH(ctx, os.Stdin, client.Issues.Create, client.Search.Issues, client.Issues.CreateComment); err != nil {
+	if err := runGH(ctx, os.Stdin, client.Issues.Create, searchIssues, client.Issues.CreateComment); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -137,7 +151,7 @@ func runGH(
 	ctx context.Context,
 	input io.Reader,
 	createIssue func(ctx context.Context, owner string, repo string, issue *githubql.IssueRequest) (*githubql.Issue, *githubql.Response, error),
-	searchIssues func(ctx context.Context, query string, opt *githubql.SearchOptions) (*githubql.IssuesSearchResult, *githubql.Response, error),
+	searchIssues func(ctx context.Context) ([]githubql.Int, error),
 	createComment func(ctx context.Context, owner string, repo string, number int, comment *githubql.IssueComment) (*githubql.IssueComment, *githubql.Response, error),
 ) error {
 	sha, ok := os.LookupEnv(teamcityVCSNumberEnv)

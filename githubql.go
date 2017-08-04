@@ -17,19 +17,20 @@ func main() {
 
 	var query struct {
 		Search struct {
-			First githubql.Int
-			Query githubql.String
-			Type  githubql.SearchType
-		}
-		Nodes []struct {
-			Issue struct {
-				Number githubql.Int
+			Nodes []struct {
+				Issue struct {
+					Number     githubql.Int
+					Repository struct {
+						NameWithOwner githubql.String
+					}
+				} `graphql:"... on Issue"`
 			}
-		}
+		} `graphql:"search(first: 100, query: $searchQuery, type: $searchType)"`
 	}
-	query.Search.First = 100
-	query.Search.Query = "repo:cockroachdb/cockroach state:open teamcity: failed tests on master"
-	query.Search.Type = githubql.Issue
+	variables := map[string]interface{}{
+		"searchQuery": githubql.String("repo:cockroachdb/cockroach state:open teamcity: failed tests on master"),
+		"searchType":  githubql.SearchTypeIssue,
+	}
 
-	log.Printf("err=%v", client.Query(ctx, &query, nil))
+	log.Printf("err=%v", client.Query(ctx, &query, variables))
 }
